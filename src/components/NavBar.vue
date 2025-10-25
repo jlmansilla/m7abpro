@@ -1,55 +1,35 @@
-<!-- src/components/NavBar.vue -->
-<script setup>
-import { useRouter } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
-
-const router = useRouter()
-const { user, logout } = useAuth()
-
-async function handleLogout() {
-  await logout()
-  router.push('/login')
-}
-</script>
-
+<!-- src/views/Home.vue (ejemplo) -->
 <template>
-  <nav class="fixed top-0 left-0 right-0 w-full bg-gradient-to-r from-blue-700 to-blue-600 text-white shadow-lg z-50">
-    <div class="container mx-auto flex items-center justify-between py-3 px-4 md:px-6">
-      <!-- Logo y navegación -->
-      <div class="flex items-center space-x-6">
-        <button @click="router.push('/home')" class="text-xl font-bold tracking-tight hover:text-blue-200 transition-colors duration-200">
-          AdWeb Online
-        </button>
-
-        <div class="hidden md:flex space-x-5">
-          <button @click="router.push('/home')" class="font-medium hover:text-blue-200 transition-colors duration-200">
-            Cursos
-          </button>
-          <button @click="router.push('/admin')" class="font-medium hover:text-blue-200 transition-colors duration-200">
-            Administración
+    <div class="bg-gray-800 text-white min-h-screen pt-16"> <!-- 👈 padding-top aquí -->
+      <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-4xl font-bold">Cursos Disponibles</h1>
+          <button @click="cargarCursosIniciales" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
+            Cargar Cursos Iniciales
           </button>
         </div>
-      </div>
-
-      <!-- Usuario y logout -->
-      <div class="flex items-center space-x-3 md:space-x-4">
-        <div class="bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-lg text-sm font-medium">
-          {{ user?.email }}
+  
+        <p class="text-center text-gray-400 mb-4">
+          No hay cursos disponibles en este momento.
+        </p>
+  
+        <div class="text-center">
+          <h2 class="text-xl font-semibold mb-2">¡Bienvenido a AdWeb Online!</h2>
+          <p class="text-sm mb-6">Has ingresado correctamente al sistema.</p>
+          <button @click="continuar" class="bg-gray-700 hover:bg-gray-600 px-6 py-2 rounded">
+            Continuar
+          </button>
         </div>
-        <button
-          @click="handleLogout"
-          class="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 ease-in-out hover:scale-[1.02]"
-        >
-          Cerrar Sesión
-        </button>
       </div>
     </div>
-  </nav>
-</template>
-
-<style scoped>
-/* Opcional: asegura que el contenido no se esconda bajo el navbar */
-body {
-  padding-top: 64px; /* Ajusta según la altura del navbar */
-}
-</style>
+  </template>
+  
+  <script setup>
+  function cargarCursosIniciales() {
+    // lógica para cargar cursos
+  }
+  
+  function continuar() {
+    // redirigir o hacer algo
+  }
+  </script>
