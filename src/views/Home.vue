@@ -34,6 +34,11 @@ async function handleLoadInitialCourses() {
   }
 }
 
+function closeWelcomeModal() {
+  // Usar una variable local para el modal
+  showWelcomeModal.value = false
+}
+
 onMounted(() => {
   unsubscribe = coursesStore.subscribeToCourses()
 })
@@ -97,14 +102,14 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-    
+
     <!-- Modal de bienvenida -->
-    <div v-if="showWelcomeModal" class="modal modal-open">
+    <div v-if="showWelcomeModal" class="modal modal-open modal-middle">
       <div class="modal-box">
         <h3 class="font-bold text-lg">¡Bienvenido a AdWeb Online!</h3>
         <p class="py-4">Has ingresado correctamente al sistema.</p>
         <div class="modal-action">
-          <button @click="showWelcomeModal = false" class="btn btn-primary">Continuar</button>
+          <button @click="closeWelcomeModal" class="btn btn-primary">Continuar</button>
         </div>
       </div>
     </div>
