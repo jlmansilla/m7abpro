@@ -13,7 +13,7 @@ async function handleLogout() {
 </script>
 
 <template>
-  <div class="w-full bg-blue-600 text-white shadow-md">
+  <div class="fixed top-0 left-0 right-0 w-full bg-blue-600 text-white shadow-md z-50">
     <div class="container mx-auto flex items-center justify-between py-3 px-4">
       <!-- Logo y enlaces -->
       <div class="flex items-center space-x-6">

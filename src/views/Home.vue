@@ -51,7 +51,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="pt-16">
     <NavBar />
     
     <div class="container mx-auto p-4">
