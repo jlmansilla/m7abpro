@@ -1,6 +1,5 @@
 # .github/workflows/firebase-hosting-merge.yml
 name: Deploy to Firebase Hosting (prod)
-
 on:
   push:
     branches: [ main ]
@@ -18,8 +17,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
       - name: Build
         run: |
@@ -31,18 +29,5 @@ jobs:
           VITE_FIREBASE_STORAGE_BUCKET="${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}" \
           npm run build
 
-      - name: Check dist folder
-        run: |
-          if [ ! -d "dist" ]; then
-            echo "ERROR: dist folder does not exist!"
-            exit 1
-          fi
-          echo "dist folder exists"
-
       - name: Deploy to production
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_M7ABPRO }}
-          projectId: m7abpro
-          channelId: live
+        run: npx firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug

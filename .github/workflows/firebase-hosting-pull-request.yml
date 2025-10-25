@@ -27,7 +27,7 @@ jobs:
       - name: Check if secrets are available
         id: check-secrets
         run: |
-          if [ -n "${{ secrets.VITE_FIREBASE_API_KEY }}" ] && [ -n "${{ secrets.FIREBASE_SERVICE_ACCOUNT_M7ABPRO }}" ]; then
+          if [ -n "${{ secrets.VITE_FIREBASE_API_KEY }}" ]; then
             echo "secrets_available=true" >> $GITHUB_OUTPUT
             echo "Secrets are available"
           else
@@ -66,12 +66,7 @@ jobs:
 
       - name: Deploy to preview channel
         if: steps.check-secrets.outputs.secrets_available == 'true'
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_M7ABPRO }}
-          projectId: m7abpro
-          channelId: preview
+        run: npx firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
         
       - name: Comment on PR
         if: steps.check-secrets.outputs.secrets_available == 'false'
