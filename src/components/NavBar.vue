@@ -1,43 +1,42 @@
-<!-- src/views/Home.vue -->
+<!-- src/components/NavBar.vue -->
+<script setup>
+import { useRouter } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
+
+const router = useRouter()
+const { user, logout } = useAuth()
+
+async function handleLogout() {
+  await logout()
+  router.push('/login')
+}
+</script>
+
 <template>
-    <div class="min-h-screen bg-gray-800 text-white">
-      <div class="container mx-auto px-4 pt-24 pb-8">
-        <div class="flex justify-between items-center mb-8">
-          <h1 class="text-4xl font-bold">Cursos Disponibles</h1>
-          <button 
-            @click="cargarCursosIniciales" 
-            class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded transition-colors"
-          >
-            Cargar Cursos Iniciales
-          </button>
-        </div>
-  
-        <p class="text-center text-gray-400 mb-8">
-          No hay cursos disponibles en este momento.
-        </p>
-  
-        <div class="text-center bg-gray-700 rounded-lg p-8 max-w-md mx-auto">
-          <h2 class="text-2xl font-semibold mb-3">¡Bienvenido a AdWeb Online!</h2>
-          <p class="text-gray-300 mb-6">Has ingresado correctamente al sistema.</p>
-          <button 
-            @click="continuar" 
-            class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded transition-colors font-medium"
-          >
-            Continuar
-          </button>
-        </div>
+  <div class="fixed top-0 left-0 right-0 w-full bg-blue-600 text-white shadow-md z-50">
+    <div class="container mx-auto flex items-center justify-between py-3 px-4">
+      <!-- Logo y enlaces -->
+      <div class="flex items-center space-x-6">
+        <a @click="router.push('/home')" class="text-xl font-bold cursor-pointer hover:text-blue-200">
+          AdWeb Online
+        </a>
+        <a @click="router.push('/home')" class="cursor-pointer hover:text-blue-200">
+          Cursos
+        </a>
+        <a @click="router.push('/admin')" class="cursor-pointer hover:text-blue-200">
+          Administración
+        </a>
+      </div>
+      
+      <!-- Usuario y logout -->
+      <div class="flex items-center space-x-4">
+        <span class="text-sm">{{ user?.email }}</span>
+        <button @click="handleLogout" class="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded cursor-pointer">
+          Cerrar Sesión
+        </button>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  function cargarCursosIniciales() {
-    // lógica para cargar cursos
-    console.log('Cargando cursos iniciales...');
-  }
-  
-  function continuar() {
-    // redirigir o hacer algo
-    console.log('Continuando...');
-  }
-  </script>
+  </div>
+</template>
+
+<style scoped></style>
