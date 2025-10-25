@@ -64,9 +64,13 @@ jobs:
           echo "dist folder exists. Contents:"
           ls -la dist
 
+      - name: Install Firebase Tools
+        if: steps.check-secrets.outputs.secrets_available == 'true'
+        run: npm install -g firebase-tools
+
       - name: Deploy to preview channel
         if: steps.check-secrets.outputs.secrets_available == 'true'
-        run: npx firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
+        run: firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
         
       - name: Comment on PR
         if: steps.check-secrets.outputs.secrets_available == 'false'

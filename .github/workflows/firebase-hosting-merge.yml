@@ -29,5 +29,8 @@ jobs:
           VITE_FIREBASE_STORAGE_BUCKET="${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}" \
           npm run build
 
+      - name: Install Firebase Tools
+        run: npm install -g firebase-tools
+
       - name: Deploy to production
-        run: npx firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
+        run: firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
