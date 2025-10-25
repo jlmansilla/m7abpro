@@ -6,12 +6,12 @@ import { useAuth } from '@/composables/useAuth'
 
 const email = ref('')
 const password = ref('')
-const confirm  = ref('')
-const loading  = ref(false)
+const confirm = ref('')
+const loading = ref(false)
 const localError = ref('')
 
 const router = useRouter()
-const route  = useRoute()
+const route = useRoute()
 const { register, errorMsg } = useAuth()
 
 async function onSubmit() {
@@ -23,7 +23,6 @@ async function onSubmit() {
 
   loading.value = true
   try {
-    // Cambia requireVerification a true si quieres forzar verificación por correo
     await register(email.value, password.value, { requireVerification: false })
     const redirect = route.query.redirect || { name: 'home' }
     router.push(redirect)
@@ -36,30 +35,81 @@ async function onSubmit() {
 </script>
 
 <template>
-  <section style="max-width:420px;margin:3rem auto;">
-    <h2>Crear cuenta</h2>
-    <form @submit.prevent="onSubmit">
-      <label>Correo
-        <input v-model="email" type="email" required />
-      </label>
+  <div class="min-h-screen flex items-center justify-center bg-base-200">
+    <div class="card w-96 bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-3xl mb-4 justify-center">Crear Cuenta</h2>
+        
+        <form @submit.prevent="onSubmit">
+          <div class="form-control w-full mb-4">
+            <label class="label">
+              <span class="label-text">Correo electrónico</span>
+            </label>
+            <input 
+              v-model="email" 
+              type="email" 
+              placeholder="email@ejemplo.com" 
+              class="input input-bordered w-full" 
+              required 
+            />
+          </div>
 
-      <label style="display:block;margin-top:8px;">Contraseña
-        <input v-model="password" type="password" minlength="6" required />
-      </label>
+          <div class="form-control w-full mb-4">
+            <label class="label">
+              <span class="label-text">Contraseña</span>
+            </label>
+            <input 
+              v-model="password" 
+              type="password" 
+              placeholder="Mínimo 6 caracteres" 
+              minlength="6"
+              class="input input-bordered w-full" 
+              required 
+            />
+          </div>
 
-      <label style="display:block;margin-top:8px;">Confirmar contraseña
-        <input v-model="confirm" type="password" minlength="6" required />
-      </label>
+          <div class="form-control w-full mb-4">
+            <label class="label">
+              <span class="label-text">Confirmar contraseña</span>
+            </label>
+            <input 
+              v-model="confirm" 
+              type="password" 
+              placeholder="Repite la contraseña" 
+              minlength="6"
+              class="input input-bordered w-full" 
+              required 
+            />
+          </div>
 
-      <button :disabled="loading" style="margin-top:12px;">
-        {{ loading ? 'Creando…' : 'Crear cuenta' }}
-      </button>
-    </form>
+          <button 
+            :disabled="loading" 
+            type="submit"
+            class="btn btn-primary w-full"
+          >
+            <span v-if="!loading">Crear Cuenta</span>
+            <span v-else class="loading loading-spinner"></span>
+          </button>
+        </form>
 
-    <p v-if="localError" style="color:#c00;margin-top:.75rem;">{{ localError }}</p>
+        <div v-if="localError" class="alert alert-error mt-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{{ localError }}</span>
+        </div>
 
-    <p style="margin-top:1rem;">
-      ¿Ya tienes cuenta? <router-link :to="{ name: 'login' }">Inicia sesión</router-link>
-    </p>
-  </section>
+        <div class="text-center mt-4">
+          <p>
+            ¿Ya tienes cuenta? 
+            <router-link :to="{ name: 'login' }" class="link link-primary">
+              Inicia sesión
+            </router-link>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+
+<style scoped></style>
