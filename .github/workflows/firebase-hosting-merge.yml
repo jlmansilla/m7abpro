@@ -18,7 +18,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci
+      - run: npm ci && npm run build
 
      # 🔎 Paso de validación para evitar builds "vacíos"
       # Nota: Comentado porque los secrets pueden no estar disponibles en PRs
