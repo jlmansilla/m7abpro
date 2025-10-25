@@ -51,7 +51,8 @@ const cursosParaAgregar = [
   }
 ];
 
-async function agregarCursos() {
+// Función exportada para agregar los cursos a Firestore
+export async function agregarCursos() {
   for (const cursoData of cursosParaAgregar) {
     try {
       const docRef = await addDoc(cursosCollectionRef, cursoData);
@@ -60,9 +61,4 @@ async function agregarCursos() {
       console.error("Error al agregar el curso", cursoData.nombre, ": ", e);
     }
   }
-}
-
-// Llama a esta función para agregar los cursos a Firestore
-export async function agregarCursos() {
-  await agregarCursos();
 }
