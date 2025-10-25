@@ -43,9 +43,5 @@ jobs:
       #  run: "grep -Rho 'AIza[0-9A-Za-z_\\-]\\+' dist || (echo 'No API key found in dist' && exit 1)"
 
       - name: Deploy live channel
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_M7ABPRO }}
-          projectId: m7abpro
-          channelId: live
+        if: steps.check-secrets.outputs.secrets_available == 'true'
+        run: npx firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --channelId preview
