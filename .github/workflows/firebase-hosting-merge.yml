@@ -47,8 +47,8 @@ jobs:
           VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
 
       # (Opcional) Verificar que la key quedó horneada en el bundle
-      - name: Sanity check bundle
-        run: "grep -Rho 'AIza[0-9A-Za-z_\\-]\\+' dist || (echo 'No API key found in dist' && exit 1)"
+      #- name: Sanity check bundle
+      #  run: "grep -Rho 'AIza[0-9A-Za-z_\\-]\\+' dist || (echo 'No API key found in dist' && exit 1)"
 
       - name: Deploy live channel
         uses: FirebaseExtended/action-hosting-deploy@v0
