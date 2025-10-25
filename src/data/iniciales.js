@@ -63,4 +63,6 @@ async function agregarCursos() {
 }
 
 // Llama a esta función para agregar los cursos a Firestore
-agregarCursos();
+export async function agregarCursos() {
+  await agregarCursos();
+}
