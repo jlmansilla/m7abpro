@@ -54,5 +54,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_EXAMPLE_API_D706F }}
-          projectId: example-api-d706f
+          projectId: m7abpro
           channelId: live
