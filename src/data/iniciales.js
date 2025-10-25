@@ -2,7 +2,7 @@
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
 const db = getFirestore();
-const cursosCollectionRef = collection(db, 'Cursos');
+const cursosCollectionRef = collection(db, 'cursos');
 
 const cursosParaAgregar = [
   {
