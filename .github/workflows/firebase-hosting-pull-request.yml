@@ -27,7 +27,7 @@ jobs:
       - name: Check if secrets are available
         id: check-secrets
         run: |
-          if [ -n "${{ secrets.VITE_FIREBASE_API_KEY }}" ]; then
+          if [ -n "${{ secrets.VITE_FIREBASE_API_KEY }}" ] && [ -n "${{ secrets.FIREBASE_SERVICE_ACCOUNT_M7ABPRO }}" ]; then
             echo "secrets_available=true" >> $GITHUB_OUTPUT
             echo "Secrets are available"
           else
