@@ -4,15 +4,7 @@ import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useCoursesStore } from '@/stores/courses'
-import { useSeedData } from '@/composables/useSeedData'
 import NavBar from '@/components/NavBar.vue'
-
-// Exponer la función de seed en el objeto global para usar desde la consola
-const { loadInitialCourses } = useSeedData()
-if (typeof window !== 'undefined') {
-  window.loadInitialCourses = loadInitialCourses
-  console.log('💡 Usa loadInitialCourses() en la consola para cargar los cursos iniciales')
-}
 
 const router = useRouter()
 const { user, showWelcomeModal } = useAuth()
@@ -20,19 +12,6 @@ const coursesStore = useCoursesStore()
 
 let unsubscribe = null
 
-async function handleLoadInitialCourses() {
-  try {
-    const result = await loadInitialCourses()
-    if (result.success) {
-      alert(`✅ ${result.message}. Se cargaron ${result.count} cursos.`)
-    } else {
-      alert(`⚠️ ${result.message}`)
-    }
-  } catch (error) {
-    console.error('Error:', error)
-    alert('❌ Error al cargar los cursos: ' + error.message)
-  }
-}
 
 function closeWelcomeModal() {
   // Usar una variable local para el modal
@@ -57,13 +36,6 @@ onUnmounted(() => {
       <div class="container mx-auto p-4">
         <div class="flex justify-between items-center mb-6">
           <h1 class="text-3xl font-bold">Cursos Disponibles</h1>
-          <button 
-            v-if="coursesStore.courses.length === 0" 
-            @click="handleLoadInitialCourses"
-            class="btn btn-primary"
-          >
-            Cargar Cursos Iniciales
-          </button>
         </div>
       
         <div v-if="coursesStore.loading" class="text-center py-8">
