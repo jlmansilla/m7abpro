@@ -22,21 +22,30 @@ export const useCoursesStore = defineStore('courses', () => {
 
   // Suscribirse a cambios en tiempo real con onSnapshot
   function subscribeToCourses() {
-    const unsubscribe = onSnapshot(
-      collection(db, 'cursos'),
-      (snapshot) => {
-        courses.value = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }))
-        loading.value = false
-      },
-      (err) => {
-        error.value = err.message
-        loading.value = false
-      }
-    )
-    return unsubscribe
+    try {
+      const unsubscribe = onSnapshot(
+        collection(db, 'cursos'),
+        (snapshot) => {
+          courses.value = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+          loading.value = false
+          error.value = null
+        },
+        (err) => {
+          console.error('Error en onSnapshot:', err)
+          error.value = err.message
+          loading.value = false
+        }
+      )
+      return unsubscribe
+    } catch (err) {
+      console.error('Error al suscribirse a cursos:', err)
+      error.value = err.message
+      loading.value = false
+      return () => {}
+    }
   }
 
   // Agregar curso con método add
