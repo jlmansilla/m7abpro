@@ -15,10 +15,24 @@ if (typeof window !== 'undefined') {
 }
 
 const router = useRouter()
-const { user } = useAuth()
+const { user, showWelcomeModal } = useAuth()
 const coursesStore = useCoursesStore()
 
 let unsubscribe = null
+
+async function handleLoadInitialCourses() {
+  try {
+    const result = await loadInitialCourses()
+    if (result.success) {
+      alert(`✅ ${result.message}. Se cargaron ${result.count} cursos.`)
+    } else {
+      alert(`⚠️ ${result.message}`)
+    }
+  } catch (error) {
+    console.error('Error:', error)
+    alert('❌ Error al cargar los cursos: ' + error.message)
+  }
+}
 
 onMounted(() => {
   unsubscribe = coursesStore.subscribeToCourses()
@@ -36,7 +50,16 @@ onUnmounted(() => {
     <NavBar />
     
     <div class="container mx-auto p-4">
-      <h1 class="text-3xl font-bold mb-6">Cursos Disponibles</h1>
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">Cursos Disponibles</h1>
+        <button 
+          v-if="coursesStore.courses.length === 0" 
+          @click="handleLoadInitialCourses"
+          class="btn btn-primary"
+        >
+          Cargar Cursos Iniciales
+        </button>
+      </div>
       
       <div v-if="coursesStore.loading" class="text-center py-8">
         <span class="loading loading-spinner loading-lg"></span>
@@ -71,6 +94,17 @@ onUnmounted(() => {
               ></progress>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal de bienvenida -->
+    <div v-if="showWelcomeModal" class="modal modal-open">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">¡Bienvenido a AdWeb Online!</h3>
+        <p class="py-4">Has ingresado correctamente al sistema.</p>
+        <div class="modal-action">
+          <button @click="showWelcomeModal = false" class="btn btn-primary">Continuar</button>
         </div>
       </div>
     </div>

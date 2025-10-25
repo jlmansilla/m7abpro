@@ -12,10 +12,17 @@ import {
 const user = ref(null)
 const isReady = ref(false)
 const errorMsg = ref('')
+const showWelcomeModal = ref(false)
 
 onAuthStateChanged(auth, (u) => {
+  const previousUser = user.value
   user.value = u
   isReady.value = true
+  
+  // Mostrar modal de bienvenida cuando el usuario se autentica
+  if (u && !previousUser) {
+    showWelcomeModal.value = true
+  }
 })
 
 export function useAuth() {
@@ -84,7 +91,7 @@ export function useAuth() {
   }
 
   return {
-    user, isReady, isAuthenticated, errorMsg,
+    user, isReady, isAuthenticated, errorMsg, showWelcomeModal,
     register, login, logout, waitForAuthInit
   }
 }
