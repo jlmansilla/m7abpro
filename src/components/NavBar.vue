@@ -13,27 +13,27 @@ async function handleLogout() {
 </script>
 
 <template>
-  <div class="navbar bg-primary text-primary-content">
-    <div class="navbar-start">
-      <a @click="router.push('/home')" class="btn btn-ghost text-xl">AdWeb Online</a>
-    </div>
-    <div class="navbar-center">
-      <ul class="menu menu-horizontal px-1">
-        <li><a @click="router.push('/home')">Cursos</a></li>
-        <li><a @click="router.push('/admin')">Administración</a></li>
-      </ul>
-    </div>
-    <div class="navbar-end">
-      <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 rounded-full bg-base-100 text-primary flex items-center justify-center">
-            {{ user?.email?.charAt(0).toUpperCase() }}
-          </div>
-        </label>
-        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a class="text-xs">{{ user?.email }}</a></li>
-          <li><a @click="handleLogout">Cerrar Sesión</a></li>
-        </ul>
+  <div class="w-full bg-blue-600 text-white shadow-md">
+    <div class="container mx-auto flex items-center justify-between py-3 px-4">
+      <!-- Logo y enlaces -->
+      <div class="flex items-center space-x-6">
+        <a @click="router.push('/home')" class="text-xl font-bold cursor-pointer hover:text-blue-200">
+          AdWeb Online
+        </a>
+        <a @click="router.push('/home')" class="cursor-pointer hover:text-blue-200">
+          Cursos
+        </a>
+        <a @click="router.push('/admin')" class="cursor-pointer hover:text-blue-200">
+          Administración
+        </a>
+      </div>
+      
+      <!-- Usuario y logout -->
+      <div class="flex items-center space-x-4">
+        <span class="text-sm">{{ user?.email }}</span>
+        <button @click="handleLogout" class="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded cursor-pointer">
+          Cerrar Sesión
+        </button>
       </div>
     </div>
   </div>
