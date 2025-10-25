@@ -1,5 +1,4 @@
 # .github/workflows/firebase-hosting-merge.yml
-# el mismo en pull request pero con projectId corregido
 name: Deploy to Firebase Hosting (prod)
 on:
   push:
@@ -18,30 +17,17 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - run: npm ci && npm run build
+      - run: npm ci
 
-     # 🔎 Paso de validación para evitar builds "vacíos"
-      # Nota: Comentado porque los secrets pueden no estar disponibles en PRs
-      # - name: Validate VITE envs
-      #   run: |
-      #     test -n "$VITE_FIREBASE_API_KEY" || (echo "Missing VITE_FIREBASE_API_KEY" && exit 1)
-      #     test -n "$VITE_FIREBASE_AUTH_DOMAIN" || (echo "Missing VITE_FIREBASE_AUTH_DOMAIN" && exit 1)
-      #     test -n "$VITE_FIREBASE_PROJECT_ID" || (echo "Missing VITE_FIREBASE_PROJECT_ID" && exit 1)
-      #     test -n "$VITE_FIREBASE_APP_ID" || (echo "Missing VITE_FIREBASE_APP_ID" && exit 1)
-      #     test -n "$VITE_FIREBASE_MESSAGING_SENDER_ID" || (echo "Missing VITE_FIREBASE_MESSAGING_SENDER_ID" && exit 1)
-      #     test -n "$VITE_FIREBASE_STORAGE_BUCKET" || (echo "Missing VITE_FIREBASE_STORAGE_BUCKET" && exit 1)
-      #   env:
-      #     VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
-      #     VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
-      #     VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-      #     VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
-      #     VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
-      #     VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+      - name: Build
+        run: |
+          VITE_FIREBASE_API_KEY="${{ secrets.VITE_FIREBASE_API_KEY }}" \
+          VITE_FIREBASE_AUTH_DOMAIN="${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" \
+          VITE_FIREBASE_PROJECT_ID="${{ secrets.VITE_FIREBASE_PROJECT_ID }}" \
+          VITE_FIREBASE_APP_ID="${{ secrets.VITE_FIREBASE_APP_ID }}" \
+          VITE_FIREBASE_MESSAGING_SENDER_ID="${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}" \
+          VITE_FIREBASE_STORAGE_BUCKET="${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}" \
+          npm run build
 
-      # Verificar que la key quedó horneada en el bundle
-      #- name: Sanity check bundle
-      #  run: "grep -Rho 'AIza[0-9A-Za-z_\\-]\\+' dist || (echo 'No API key found in dist' && exit 1)"
-
-      - name: Deploy live channel
-        if: steps.check-secrets.outputs.secrets_available == 'true'
+      - name: Deploy to production
         run: npx firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
