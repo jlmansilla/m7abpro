@@ -4,17 +4,20 @@ import { useAuth } from '@/composables/useAuth'
 import Login from '@/views/Login.vue'
 import Home from '@/views/Home.vue'
 
-// const Login    = () => import('@/views/Login.vue')
+// Lazy loading para optimizar
 const Register = () => import('@/views/Register.vue')
-// const Home     = () => import('@/views/Home.vue')
+const Admin = () => import('@/views/Admin.vue')
+const EditCourse = () => import('@/views/EditCourse.vue')
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', redirect: '/login' },
+    { path: '/', redirect: '/home' },
     { path: '/login',    name: 'login',    component: Login,    meta: { public: true } },
     { path: '/register', name: 'register', component: Register, meta: { public: true } },
-    { path: '/home/',     name: 'home',     component: Home, props: true },
+    { path: '/home',     name: 'home',     component: Home },
+    { path: '/admin',    name: 'admin',    component: Admin },
+    { path: '/edit-course/:id', name: 'edit-course', component: EditCourse },
     { path: '/:pathMatch(.*)*', redirect: '/login' },
   ],
 })
