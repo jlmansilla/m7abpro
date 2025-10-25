@@ -4,7 +4,15 @@ import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useCoursesStore } from '@/stores/courses'
+import { useSeedData } from '@/composables/useSeedData'
 import NavBar from '@/components/NavBar.vue'
+
+// Exponer la función de seed en el objeto global para usar desde la consola
+const { loadInitialCourses } = useSeedData()
+if (typeof window !== 'undefined') {
+  window.loadInitialCourses = loadInitialCourses
+  console.log('💡 Usa loadInitialCourses() en la consola para cargar los cursos iniciales')
+}
 
 const router = useRouter()
 const { user } = useAuth()
