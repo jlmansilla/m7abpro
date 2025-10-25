@@ -51,10 +51,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="pt-16">
+  <div>
     <NavBar />
-    
-    <div class="container mx-auto p-4">
+    <div class="pt-16">
+      <div class="container mx-auto p-4">
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">Cursos Disponibles</h1>
         <button 
@@ -100,6 +100,7 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
 
