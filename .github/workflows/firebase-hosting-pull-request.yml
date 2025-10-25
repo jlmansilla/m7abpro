@@ -1,6 +1,10 @@
 # .github/workflows/firebase-hosting-pull-request.yml
 # Workflow para preview de pull requests para la rama main y solo para pull requests de la rama main
 name: Deploy to Firebase Hosting (preview)
+
+if: steps.check-secrets.outputs.secrets_available == 'true'
+run: npx firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}"
+
 on:
   pull_request:
     branches: [ main ]
@@ -59,12 +63,8 @@ jobs:
 
       - name: Deploy to preview channel
         if: steps.check-secrets.outputs.secrets_available == 'true'
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_M7ABPRO }}
-          projectId: m7abpro
-          channelId: preview
+        run: npx firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --channelId preview
+        
 
       - name: Comment on PR
         if: steps.check-secrets.outputs.secrets_available == 'false'
