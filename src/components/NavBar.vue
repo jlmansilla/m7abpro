@@ -13,11 +13,11 @@ async function handleLogout() {
 </script>
 
 <template>
-  <nav class="navbar bg-primary text-primary-content">
+  <div class="navbar bg-primary text-primary-content">
     <div class="navbar-start">
       <a @click="router.push('/home')" class="btn btn-ghost text-xl">AdWeb Online</a>
     </div>
-    <div class="navbar-center hidden lg:flex">
+    <div class="navbar-center">
       <ul class="menu menu-horizontal px-1">
         <li><a @click="router.push('/home')">Cursos</a></li>
         <li><a @click="router.push('/admin')">Administración</a></li>
@@ -25,18 +25,18 @@ async function handleLogout() {
     </div>
     <div class="navbar-end">
       <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full bg-base-100 text-primary flex items-center justify-center">
             {{ user?.email?.charAt(0).toUpperCase() }}
           </div>
-        </div>
+        </label>
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a class="text-sm">{{ user?.email }}</a></li>
+          <li><a class="text-xs">{{ user?.email }}</a></li>
           <li><a @click="handleLogout">Cerrar Sesión</a></li>
         </ul>
       </div>
     </div>
-  </nav>
+  </div>
 </template>
 
 <style scoped></style>
