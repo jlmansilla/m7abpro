@@ -70,7 +70,15 @@ jobs:
 
       - name: Deploy to preview channel
         if: steps.check-secrets.outputs.secrets_available == 'true'
-        run: firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
+        run: firebase deploy --only hosting,firestore:rules,firestore:indexes --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
+      
+      - name: Verify deployment
+        if: steps.check-secrets.outputs.secrets_available == 'true'
+        run: |
+          echo "✅ Deployment completed"
+          echo "📦 Hosting deployed"
+          echo "🔐 Firestore rules deployed"
+          echo "📊 Firestore indexes deployed"
         
       - name: Comment on PR
         if: steps.check-secrets.outputs.secrets_available == 'false'

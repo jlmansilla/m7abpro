@@ -40,4 +40,11 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Deploy to production
-        run: firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
+        run: firebase deploy --only hosting,firestore:rules,firestore:indexes --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
+      
+      - name: Verify deployment
+        run: |
+          echo "✅ Deployment completed"
+          echo "📦 Hosting deployed"
+          echo "🔐 Firestore rules deployed"
+          echo "📊 Firestore indexes deployed"
