@@ -37,7 +37,7 @@ onUnmounted(() => {
       <div class="container mx-auto px-4">
         <!-- Header -->
         <div class="flex justify-between items-center mb-8">
-          <h1 class="text-4xl font-bold text-white">Cursos Activos</h1>
+          <h1 class="text-4xl font-bold text-white">Cursos Disponibles</h1>
         </div>
 
         <!-- Loading State -->
