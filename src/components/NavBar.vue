@@ -7,8 +7,14 @@ const router = useRouter()
 const { user, logout } = useAuth()
 
 async function handleLogout() {
-  await logout()
-  router.push('/login')
+  try {
+    console.log('🚪 Cerrando sesión...')
+    await logout()
+    console.log('✅ Sesión cerrada exitosamente')
+    router.push('/login')
+  } catch (error) {
+    console.error('❌ Error al cerrar sesión:', error)
+  }
 }
 </script>
 

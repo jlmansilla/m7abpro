@@ -23,6 +23,7 @@ export const useCoursesStore = defineStore('courses', () => {
   // Suscribirse a cambios en tiempo real con onSnapshot
   function subscribeToCourses() {
     try {
+      loading.value = true
       const unsubscribe = onSnapshot(
         collection(db, 'cursos'),
         (snapshot) => {
@@ -32,16 +33,17 @@ export const useCoursesStore = defineStore('courses', () => {
           }))
           loading.value = false
           error.value = null
+          console.log(`✅ Cargados ${courses.value.length} cursos desde Firestore`)
         },
         (err) => {
-          console.error('Error en onSnapshot:', err)
+          console.error('❌ Error en onSnapshot:', err)
           error.value = err.message
           loading.value = false
         }
       )
       return unsubscribe
     } catch (err) {
-      console.error('Error al suscribirse a cursos:', err)
+      console.error('❌ Error al suscribirse a cursos:', err)
       error.value = err.message
       loading.value = false
       return () => {}
