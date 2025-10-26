@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 import { useCoursesStore } from '@/stores/courses'
 import NavBar from '@/components/NavBar.vue'
-import { agregarCursos } from '@/data/iniciales'
 
 const router = useRouter()
 const { user, showWelcomeModal } = useAuth()
@@ -18,15 +17,6 @@ function closeWelcomeModal() {
 }
 
 onMounted(async () => {
-  // Cargar cursos iniciales (la función ya verifica duplicados)
-  console.log('📚 Verificando y cargando cursos iniciales...')
-  try {
-    await agregarCursos()
-    console.log('✅ Carga de cursos completada')
-  } catch (error) {
-    console.error('❌ Error al cargar cursos iniciales:', error)
-  }
-
   // Solo suscribirse a los cursos que ya existen en Firestore
   unsubscribe = coursesStore.subscribeToCourses()
   console.log('📚 Cargando cursos desde Firestore...')
