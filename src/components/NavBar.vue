@@ -50,7 +50,7 @@ onMounted(() => {
       <!-- Usuario y logout - derecha -->
       <div v-if="authStore.user" class="flex items-center gap-4 nav-link">
         <span class="text-sm font-medium">{{ authStore.user.email }}</span>
-        <button @click="handleLogout" class="btn btn-error btn-sm nav-link">
+        <button @click="handleLogout" class="btn btn-error btn-sm nav-link hover:scale-105 hover:shadow-lg transition-all duration-200">
           Salir
         </button>
       </div>
