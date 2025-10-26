@@ -1,4 +1,3 @@
-<!-- src/views/Admin.vue -->
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -96,67 +95,58 @@ async function toggleCourseStatus(course) {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-base-200">
     <NavBar />
-
-    <main class="pt-24 pb-8">
-      <div class="container mx-auto px-4">
-        <header class="flex justify-between items-center mb-8">
-          <h1 class="text-3xl font-bold text-gray-800">Administración de Cursos</h1>
-          <button @click="openAddModal" class="btn btn-primary hover:scale-105 transition-transform">Agregar Curso</button>
-        </header>
-
-        <div class="bg-white rounded-lg shadow-md">
-          <div class="overflow-x-auto">
-            <table class="table w-full">
-              <thead>
-                <tr>
-                  <th>Imagen</th>
-                  <th>Código</th>
-                  <th>Nombre</th>
-                  <th>Precio</th>
-                  <th>Duración</th>
-                  <th>Cupos</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="course in coursesStore.courses" :key="course.id">
-                  <td>
-                    <div class="avatar">
-                      <div class="w-16 rounded">
-                        <img :src="course.img" :alt="course.nombre" />
-                      </div>
-                    </div>
-                  </td>
-                  <td>{{ course.codigo }}</td>
-                  <td>{{ course.nombre }}</td>
-                  <td>${{ parseInt(course.precio).toLocaleString() }}</td>
-                  <td>{{ course.duracion }}</td>
-                  <td>{{ course.cupos - course.inscritos }} / {{ course.cupos }}</td>
-                  <td>
-                    <input type="checkbox" :checked="course.estado" @change="toggleCourseStatus(course)" class="toggle toggle-success" />
-                  </td>
-                  <td>
-                    <div class="flex gap-2">
-                      <button @click="editCourse(course.id)" class="btn btn-sm btn-info hover:scale-105 transition-transform">Editar</button>
-                      <button @click="openDeleteModal(course)" class="btn btn-sm btn-error hover:scale-105 transition-transform">Eliminar</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div v-if="coursesStore.courses.length === 0" class="text-center py-16">
-          <h2 class="text-2xl font-bold text-gray-700">No hay cursos registrados</h2>
-        </div>
+    
+    <div class="container mx-auto p-4 pt-24">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">Administración de Cursos</h1>
+        <button @click="openAddModal" class="btn btn-primary">Agregar Curso</button>
       </div>
-    </main>
 
-    <!-- Add Course Modal -->
+      <div class="overflow-x-auto bg-base-100 rounded-lg shadow">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Duración</th>
+              <th>Cupos</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="course in coursesStore.courses" :key="course.id">
+              <td>
+                <div class="avatar">
+                  <div class="w-16 rounded">
+                    <img :src="course.img" :alt="course.nombre" />
+                  </div>
+                </div>
+              </td>
+              <td>{{ course.codigo }}</td>
+              <td>{{ course.nombre }}</td>
+              <td>${{ parseInt(course.precio).toLocaleString() }}</td>
+              <td>{{ course.duracion }}</td>
+              <td>{{ course.cupos - course.inscritos }} / {{ course.cupos }}</td>
+              <td>
+                <input type="checkbox" :checked="course.estado" @change="toggleCourseStatus(course)" class="toggle toggle-success" />
+              </td>
+              <td>
+                <div class="flex gap-2">
+                  <button @click="editCourse(course.id)" class="btn btn-sm btn-info">Editar</button>
+                  <button @click="openDeleteModal(course)" class="btn btn-sm btn-error">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <dialog :class="{ 'modal-open': showAddModal }" class="modal">
       <div class="modal-box w-11/12 max-w-5xl">
         <h3 class="font-bold text-lg mb-4">Agregar Nuevo Curso</h3>
@@ -164,51 +154,52 @@ async function toggleCourseStatus(course) {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="form-control">
               <label class="label"><span class="label-text">Código</span></label>
-              <input v-model="newCourse.codigo" type="text" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
+              <input v-model="newCourse.codigo" type="text" class="input input-bordered" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text">Nombre</span></label>
-              <input v-model="newCourse.nombre" type="text" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
+              <input v-model="newCourse.nombre" type="text" class="input input-bordered" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text">Precio</span></label>
-              <input v-model="newCourse.precio" type="number" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
+              <input v-model="newCourse.precio" type="number" class="input input-bordered" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text">Duración</span></label>
-              <input v-model="newCourse.duracion" type="text" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
+              <input v-model="newCourse.duracion" type="text" class="input input-bordered" required />
             </div>
             <div class="form-control md:col-span-2">
               <label class="label"><span class="label-text">Descripción</span></label>
-              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered focus:ring-2 focus:ring-blue-500" required></textarea>
+              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered" required></textarea>
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text">Cupos</span></label>
-              <input v-model="newCourse.cupos" type="number" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
+              <input v-model="newCourse.cupos" type="number" class="input input-bordered" required />
             </div>
             <div class="form-control md:col-span-2">
               <label class="label"><span class="label-text">URL de Imagen</span></label>
-              <input v-model="newCourse.img" type="url" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
+              <input v-model="newCourse.img" type="url" class="input input-bordered" required />
             </div>
           </div>
           <div class="modal-action mt-6">
-            <button type="button" @click="showAddModal = false" class="btn hover:scale-105 transition-transform">Cancelar</button>
-            <button type="submit" class="btn btn-primary hover:scale-105 transition-transform">Agregar Curso</button>
+            <button type="button" @click="showAddModal = false" class="btn">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Agregar Curso</button>
           </div>
         </form>
       </div>
     </dialog>
 
-    <!-- Delete Course Modal -->
     <dialog :class="{ 'modal-open': showDeleteModal }" class="modal">
       <div class="modal-box">
         <h3 class="font-bold text-lg">Confirmar Eliminación</h3>
         <p class="py-4">¿Estás seguro de que deseas eliminar el curso "{{ courseToDelete?.nombre }}"?</p>
         <div class="modal-action">
-          <button @click="showDeleteModal = false" class="btn hover:scale-105 transition-transform">Cancelar</button>
-          <button @click="confirmDeleteCourse()" class="btn btn-error hover:scale-105 transition-transform">Sí, borrar</button>
+          <button @click="showDeleteModal = false" class="btn">Cancelar</button>
+          <button @click="confirmDeleteCourse()" class="btn btn-error">Sí, borrar</button>
         </div>
       </div>
     </dialog>
   </div>
 </template>
+
+<style scoped></style>

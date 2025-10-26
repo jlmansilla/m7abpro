@@ -1,4 +1,3 @@
-<!-- src/views/Home.vue -->
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -36,66 +35,42 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-100">
+  <div class="min-h-screen bg-base-200">
     <NavBar />
 
-    <main class="pt-24 pb-8">
+    <div class="pt-24 pb-8">
       <div class="container mx-auto px-4">
-        <header class="mb-8">
-          <h1 class="text-4xl font-bold text-gray-800">Cursos Disponibles</h1>
-        </header>
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold">Cursos Disponibles</h1>
+        </div>
 
-        <!-- Loading State -->
         <div v-if="coursesStore.loading" class="text-center py-8">
           <span class="loading loading-spinner loading-lg"></span>
-          <p class="mt-4 text-gray-600">Cargando cursos...</p>
         </div>
 
-        <!-- Empty State -->
-        <div v-else-if="coursesStore.activeCourses.length === 0" class="text-center py-16">
-          <div class="max-w-md mx-auto">
-            <h2 class="text-3xl font-bold text-gray-700">No hay cursos disponibles</h2>
-            <p class="mt-4 text-gray-500">Vuelve a intentarlo más tarde.</p>
-          </div>
+        <div v-else-if="coursesStore.activeCourses.length === 0" class="text-center">
+          <p>No hay cursos disponibles</p>
         </div>
 
-        <!-- Courses Grid -->
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="course in coursesStore.activeCourses" :key="course.id" class="group bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-            <div class="relative">
-              <img :src="course.img" :alt="course.nombre" class="w-full h-48 object-cover rounded-t-2xl group-hover:scale-110 transition-transform duration-500">
-              <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-500 flex items-center justify-center">
-                <button class="btn btn-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" @click="enroll(course)">Inscribirse</button>
-              </div>
-              <div v-if="course.cupos - course.inscritos <= 5" class="absolute top-2 right-2 badge badge-error font-bold">¡Últimos cupos!</div>
-            </div>
-            <div class="p-6">
-              <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ course.nombre }}</h2>
-              <p class="text-gray-600 mb-4 line-clamp-2">{{ course.descripcion }}</p>
-              
-              <div class="flex justify-between items-center mb-4">
-                <span class="text-sm font-semibold text-gray-700">{{ course.duracion }}</span>
-                <span class="text-2xl font-bold text-primary-500">${{ parseInt(course.precio).toLocaleString() }}</span>
-              </div>
-
-              <div class="mb-4">
-                <div class="flex justify-between text-sm text-gray-600 mb-1">
-                  <span>Cupos: {{ course.cupos - course.inscritos }} / {{ course.cupos }}</span>
-                  <span>{{ Math.round((course.inscritos / course.cupos) * 100) }}%</span>
-                </div>
-                <progress class="progress progress-primary w-full" :value="course.inscritos" :max="course.cupos"></progress>
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div v-for="course in coursesStore.activeCourses" :key="course.id" class="card bg-base-100 shadow-xl">
+            <figure><img :src="course.img" :alt="course.nombre" /></figure>
+            <div class="card-body">
+              <h2 class="card-title">{{ course.nombre }}</h2>
+              <p>{{ course.descripcion }}</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-primary" @click="enroll(course)">Inscribirse</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
 
-    <!-- Welcome Modal -->
     <div v-if="authStore.showWelcomeModal" class="modal modal-open">
       <div class="modal-box">
-        <h3 class="font-bold text-lg">¡Bienvenido a AdWeb Online!</h3>
-        <p class="py-4">Has ingresado correctamente al sistema.</p>
+        <h3 class="font-bold text-lg">¡Bienvenido!</h3>
+        <p class="py-4">Has ingresado correctamente.</p>
         <div class="modal-action">
           <button @click="closeWelcomeModal" class="btn btn-primary">Continuar</button>
         </div>
@@ -103,3 +78,5 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped></style>
