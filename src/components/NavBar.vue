@@ -28,7 +28,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-slate-500 text-white shadow-lg fixed top-0 left-0 right-0 z-50 w-full h-16 px-8 py-4 border-b-2 border-slate-700">
+  <div class="bg-blue-700 text-white shadow-lg fixed top-0 left-0 right-0 z-50 w-full h-16 px-8 py-4 border-b-2 border-blue-600">
     <div class="flex items-center justify-between w-full h-full">
       <!-- Logo - izquierda -->
       <div>
