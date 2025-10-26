@@ -29,9 +29,9 @@ async function handleLogout() {
       </div>
       
       <!-- Usuario y logout -->
-      <div class="flex items-center space-x-4">
+      <div v-if="user" class="flex items-center space-x-4">
         <span class="text-sm">{{ user?.email }}</span>
-        <button @click="handleLogout" class="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded cursor-pointer">
+        <button @click="handleLogout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded cursor-pointer transition-colors">
           Cerrar Sesión
         </button>
       </div>
