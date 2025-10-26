@@ -38,7 +38,7 @@ onUnmounted(() => {
   <div class="min-h-screen bg-base-200">
     <NavBar />
 
-    <div class="pt-24 pb-8">
+    <div class="pt-32 pb-8">
       <div class="container mx-auto px-4">
         <div class="mb-8">
           <h1 class="text-3xl font-bold">Cursos Disponibles</h1>
@@ -54,8 +54,12 @@ onUnmounted(() => {
 
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div v-for="course in coursesStore.activeCourses" :key="course.id" class="card bg-base-100 shadow-xl">
-            <figure class="h-20 flex items-center justify-center bg-base-200">
-              <img :src="course.img" :alt="course.nombre" class="w-48 h-24 object-cover"  />
+            <figure class="bg-base-200 flex items-center justify-center" style="height: 250px; overflow: hidden;">
+              <img 
+                :src="course.img" 
+                :alt="course.nombre" 
+                style="max-width: 100%; max-height: 100%; object-fit: contain;"  
+              />
             </figure>
             <div class="card-body">
               <h2 class="card-title">{{ course.nombre }}</h2>
