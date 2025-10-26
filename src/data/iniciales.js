@@ -4,6 +4,8 @@ import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebas
 const db = getFirestore();
 const cursosCollectionRef = collection(db, 'cursos');
 
+let coursesAdded = false;
+
 const cursosParaAgregar = [
   {
     "codigo": "0001",
@@ -19,7 +21,7 @@ const cursosParaAgregar = [
   {
     "codigo": "0002",
     "nombre": "CSS",
-    "estado": false,
+    "estado": true,
     "precio": "20000",
     "duracion": "1 mes",
     "descripcion": "curso css",
@@ -53,6 +55,13 @@ const cursosParaAgregar = [
 
 // Función exportada para agregar los cursos a Firestore
 export async function agregarCursos() {
+  if (coursesAdded) {
+    console.log("⏭️ Los cursos iniciales ya fueron procesados, omitiendo...");
+    return;
+  }
+  coursesAdded = true;
+  console.log("🔥 Procesando cursos iniciales por primera vez...");
+
   for (const cursoData of cursosParaAgregar) {
     try {
       // Verificar si ya existe un curso con este código
