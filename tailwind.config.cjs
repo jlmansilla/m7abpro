@@ -52,6 +52,12 @@ module.exports = {
           '50%': { transform: 'translateY(-5px)' },
         },
       },
+      backdropBlur: {
+        xs: '2px',
+      },
+      transitionDuration: {
+        '400': '400ms',
+      },
     },
   },
   daisyui: {
@@ -73,5 +79,18 @@ module.exports = {
       },
     ],
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    require('daisyui'),
+    require('@tailwindcss/line-clamp'),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.text-gradient': {
+          background: 'linear-gradient(to right, #3b82f6, #06b6d4)',
+          '-webkit-background-clip': 'text',
+          '-webkit-text-fill-color': 'transparent',
+        },
+      }
+      addUtilities(newUtilities, ['responsive', 'hover'])
+    },
+  ],
 }

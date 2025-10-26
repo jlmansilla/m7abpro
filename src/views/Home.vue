@@ -61,11 +61,17 @@ onUnmounted(() => {
 
         <!-- Courses Grid -->
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div v-for="course in coursesStore.activeCourses" :key="course.id" class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-transform duration-300">
-            <img :src="course.img" :alt="course.nombre" class="w-full h-48 object-cover">
+          <div v-for="course in coursesStore.activeCourses" :key="course.id" class="group bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+            <div class="relative">
+              <img :src="course.img" :alt="course.nombre" class="w-full h-48 object-cover rounded-t-2xl group-hover:scale-110 transition-transform duration-500">
+              <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-all duration-500 flex items-center justify-center">
+                <button class="btn btn-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" @click="enroll(course)">Inscribirse</button>
+              </div>
+              <div v-if="course.cupos - course.inscritos <= 5" class="absolute top-2 right-2 badge badge-error font-bold">¡Últimos cupos!</div>
+            </div>
             <div class="p-6">
               <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ course.nombre }}</h2>
-              <p class="text-gray-600 mb-4">{{ course.descripcion }}</p>
+              <p class="text-gray-600 mb-4 line-clamp-2">{{ course.descripcion }}</p>
               
               <div class="flex justify-between items-center mb-4">
                 <span class="text-sm font-semibold text-gray-700">{{ course.duracion }}</span>
@@ -79,8 +85,6 @@ onUnmounted(() => {
                 </div>
                 <progress class="progress progress-primary w-full" :value="course.inscritos" :max="course.cupos"></progress>
               </div>
-
-              <button class="btn btn-primary w-full" @click="enroll(course)">Inscribirse</button>
             </div>
           </div>
         </div>

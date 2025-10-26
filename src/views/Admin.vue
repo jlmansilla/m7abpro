@@ -103,9 +103,7 @@ async function toggleCourseStatus(course) {
       <div class="container mx-auto px-4">
         <header class="flex justify-between items-center mb-8">
           <h1 class="text-3xl font-bold text-gray-800">Administración de Cursos</h1>
-          <button @click="openAddModal" class="btn btn-primary">
-            Agregar Curso
-          </button>
+          <button @click="openAddModal" class="btn btn-primary hover:scale-105 transition-transform">Agregar Curso</button>
         </header>
 
         <div class="bg-white rounded-lg shadow-md">
@@ -142,8 +140,8 @@ async function toggleCourseStatus(course) {
                   </td>
                   <td>
                     <div class="flex gap-2">
-                      <button @click="editCourse(course.id)" class="btn btn-sm btn-info">Editar</button>
-                      <button @click="openDeleteModal(course)" class="btn btn-sm btn-error">Eliminar</button>
+                      <button @click="editCourse(course.id)" class="btn btn-sm btn-info hover:scale-105 transition-transform">Editar</button>
+                      <button @click="openDeleteModal(course)" class="btn btn-sm btn-error hover:scale-105 transition-transform">Eliminar</button>
                     </div>
                   </td>
                 </tr>
@@ -166,36 +164,36 @@ async function toggleCourseStatus(course) {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="form-control">
               <label class="label"><span class="label-text">Código</span></label>
-              <input v-model="newCourse.codigo" type="text" class="input input-bordered" required />
+              <input v-model="newCourse.codigo" type="text" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text">Nombre</span></label>
-              <input v-model="newCourse.nombre" type="text" class="input input-bordered" required />
+              <input v-model="newCourse.nombre" type="text" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text">Precio</span></label>
-              <input v-model="newCourse.precio" type="number" class="input input-bordered" required />
+              <input v-model="newCourse.precio" type="number" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text">Duración</span></label>
-              <input v-model="newCourse.duracion" type="text" class="input input-bordered" required />
+              <input v-model="newCourse.duracion" type="text" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
             </div>
             <div class="form-control md:col-span-2">
               <label class="label"><span class="label-text">Descripción</span></label>
-              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered" required></textarea>
+              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered focus:ring-2 focus:ring-blue-500" required></textarea>
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text">Cupos</span></label>
-              <input v-model="newCourse.cupos" type="number" class="input input-bordered" required />
+              <input v-model="newCourse.cupos" type="number" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
             </div>
             <div class="form-control md:col-span-2">
               <label class="label"><span class="label-text">URL de Imagen</span></label>
-              <input v-model="newCourse.img" type="url" class="input input-bordered" required />
+              <input v-model="newCourse.img" type="url" class="input input-bordered focus:ring-2 focus:ring-blue-500" required />
             </div>
           </div>
           <div class="modal-action mt-6">
-            <button type="button" @click="showAddModal = false" class="btn">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Agregar Curso</button>
+            <button type="button" @click="showAddModal = false" class="btn hover:scale-105 transition-transform">Cancelar</button>
+            <button type="submit" class="btn btn-primary hover:scale-105 transition-transform">Agregar Curso</button>
           </div>
         </form>
       </div>
@@ -207,8 +205,8 @@ async function toggleCourseStatus(course) {
         <h3 class="font-bold text-lg">Confirmar Eliminación</h3>
         <p class="py-4">¿Estás seguro de que deseas eliminar el curso "{{ courseToDelete?.nombre }}"?</p>
         <div class="modal-action">
-          <button @click="showDeleteModal = false" class="btn">Cancelar</button>
-          <button @click="confirmDeleteCourse()" class="btn btn-error">Sí, borrar</button>
+          <button @click="showDeleteModal = false" class="btn hover:scale-105 transition-transform">Cancelar</button>
+          <button @click="confirmDeleteCourse()" class="btn btn-error hover:scale-105 transition-transform">Sí, borrar</button>
         </div>
       </div>
     </dialog>
