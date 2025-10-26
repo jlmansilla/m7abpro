@@ -16,6 +16,8 @@ watchEffect(async () => {
   <RouterView />
 </template>
 
-<style scoped>
-
+<style>
+body {
+  background-color: #f1f5f9; /* base-200 */
+}
 </style>
