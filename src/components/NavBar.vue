@@ -37,12 +37,12 @@ onMounted(() => {
       </div>
       
       <!-- Enlaces de navegación -->
-      <div class="flex items-center gap-2">
-        <a class="px-4 py-2 text-white rounded-lg hover:bg-white/10 transition-all cursor-pointer font-medium" 
+      <div class="flex items-center gap-6">
+        <a class="px-6 py-2 text-white rounded-lg hover:bg-white/10 transition-all cursor-pointer font-medium" 
            @click="router.push('/home')">
           Cursos
         </a>
-        <a class="px-4 py-2 text-white rounded-lg hover:bg-white/10 transition-all cursor-pointer font-medium" 
+        <a class="px-6 py-2 text-white rounded-lg hover:bg-white/10 transition-all cursor-pointer font-medium" 
            @click="router.push('/admin')">
           Administración
         </a>
@@ -50,10 +50,10 @@ onMounted(() => {
       
       <!-- Usuario y logout -->
       <div class="flex-shrink-0">
-        <div v-if="authStore.user" class="flex items-center gap-3">
+        <div v-if="authStore.user" class="flex items-center gap-4">
           <span class="font-medium text-blue-100 text-sm">{{ authStore.user.email }}</span>
           <button @click="handleLogout" 
-                  class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors text-sm">
+                  class="px-5 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors text-sm">
             Salir
           </button>
         </div>
