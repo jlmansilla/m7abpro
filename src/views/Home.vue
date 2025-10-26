@@ -54,7 +54,9 @@ onUnmounted(() => {
 
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div v-for="course in coursesStore.activeCourses" :key="course.id" class="card bg-base-100 shadow-xl">
-            <figure><img :src="course.img" :alt="course.nombre" /></figure>
+            <figure class="h-20 flex items-center justify-center bg-base-200">
+              <img :src="course.img" :alt="course.nombre" class="w-48 h-24 object-cover"  />
+            </figure>
             <div class="card-body">
               <h2 class="card-title">{{ course.nombre }}</h2>
               <p>{{ course.descripcion }}</p>
