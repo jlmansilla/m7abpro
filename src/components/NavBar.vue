@@ -24,25 +24,36 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="navbar bg-neutral text-neutral-content fixed top-0 left-0 right-0 z-50 shadow-lg">
-    <div class="navbar-start">
-      <a class="btn btn-ghost normal-case text-xl" @click="router.push('/home')">AdWeb Online</a>
-    </div>
-    <div class="navbar-center">
-      <<div class="flex gap-3">
-        <a class="btn bg-primary text-primary-content hover:bg-primary/90 shadow-md px-6 transition-all duration-300" @click="router.push('/home')">Cursos</a>
-        <a class="btn bg-success text-success-content hover:bg-success/90 shadow-md px-6 transition-all duration-300" @click="router.push('/admin')">Administración</a>
-      </div>
-    </div>
-    <div class="navbar-end">
-      <div v-if="authStore.user" class="flex items-center gap-2">
-        <span class="font-semibold">{{ authStore.user.email }}</span>
-        <button @click="handleLogout" class="btn btn-error btn-sm">
-          Salir
-        </button>
-      </div>
+  <<div class="navbar bg-gradient-to-r from-blue-600 to-blue-800 text-white fixed top-0 left-0 right-0 z-50 shadow-xl px-6">
+  <div class="navbar-start">
+    <a class="text-xl font-bold hover:text-blue-200 transition-colors cursor-pointer" @click="router.push('/home')">
+      AdWeb Online
+    </a>
+  </div>
+  
+  <div class="navbar-center">
+    <div class="flex items-center gap-1">
+      <a class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all cursor-pointer font-medium" 
+         @click="router.push('/home')">
+        Cursos
+      </a>
+      <a class="px-4 py-2 rounded-lg hover:bg-white/10 transition-all cursor-pointer font-medium" 
+         @click="router.push('/admin')">
+        Administración
+      </a>
     </div>
   </div>
+  
+  <div class="navbar-end">
+    <div v-if="authStore.user" class="flex items-center gap-3">
+      <span class="font-medium text-blue-100">{{ authStore.user.email }}</span>
+      <button @click="handleLogout" 
+              class="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg font-medium transition-colors">
+        Salir
+      </button>
+    </div>
+  </div>
+</div>
 </template>
 
 <style scoped></style>
