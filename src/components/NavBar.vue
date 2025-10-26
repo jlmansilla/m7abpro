@@ -40,23 +40,19 @@ onMounted(() => {
         </a>
       </div>
       
-      <!-- Usuario y logout -->
-      <div v-if="user" class="flex items-center gap-3">
-        <span class="text-sm font-medium bg-blue-700 px-3 py-1 rounded">{{ user.email }}</span>
+      <!-- SIEMPRE mostrar botón de cerrar sesión -->
+      <div class="flex items-center gap-3">
+        <!-- Mostrar email si hay usuario -->
+        <span v-if="user" class="text-sm font-medium bg-blue-700 px-3 py-1 rounded">{{ user.email }}</span>
+        
+        <!-- Botón de cerrar sesión - SIEMPRE VISIBLE -->
         <button 
           @click="handleLogout" 
           type="button"
-          class="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold px-5 py-2 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
-          style="min-width: 120px;"
+          class="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-red-800"
+          style="min-width: 140px; font-size: 16px; z-index: 9999; position: relative;"
         >
           🚪 SALIR
-        </button>
-      </div>
-      
-      <!-- Botón de login si NO hay usuario -->
-      <div v-else>
-        <button @click="router.push('/login')" class="bg-green-600 hover:bg-green-700 text-white font-bold px-6 py-2.5 rounded-lg shadow-lg">
-          Iniciar Sesión
         </button>
       </div>
     </div>
