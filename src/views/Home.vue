@@ -59,7 +59,7 @@ onUnmounted(() => {
         <!-- Courses Grid -->
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div
-            v-for="course in coursesStore.activeCourses"
+            v-for="course in (coursesStore.activeCourses.length > 0 ? coursesStore.activeCourses : coursesStore.courses)"
             :key="course.id"
             class="bg-gray-700 rounded-lg shadow-xl overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300"
           >

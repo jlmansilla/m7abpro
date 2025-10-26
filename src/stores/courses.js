@@ -16,9 +16,11 @@ export const useCoursesStore = defineStore('courses', () => {
   const error = ref(null)
 
   // Computed
-  const activeCourses = computed(() => 
-    courses.value.filter(c => c.estado === true)
-  )
+  const activeCourses = computed(() => {
+    const filtered = courses.value.filter(c => c.estado === true)
+    console.log(`🔄 activeCourses computed: ${filtered.length} cursos activos de ${courses.value.length} totales`)
+    return filtered
+  })
 
   // Suscribirse a cambios en tiempo real con onSnapshot
   function subscribeToCourses() {
@@ -31,9 +33,25 @@ export const useCoursesStore = defineStore('courses', () => {
             id: doc.id,
             ...doc.data()
           }))
+          
+          // Diagnóstico: contabilizar cursos por estado
+          const activos = courses.value.filter(c => c.estado === true).length
+          const inactivos = courses.value.filter(c => c.estado === false).length
+          const sinEstado = courses.value.filter(c => c.estado === undefined).length
+          
+          console.log(`📊 Total cursos cargados: ${courses.value.length}`)
+          console.log(`✅ Activos (estado: true): ${activos}`)
+          console.log(`❌ Inactivos (estado: false): ${inactivos}`)
+          console.log(`⚠️ Sin estado: ${sinEstado}`)
+          console.log('📋 Detalle de cursos:', courses.value.map(c => ({ 
+            nombre: c.nombre, 
+            estado: c.estado,
+            codigo: c.codigo,
+            id: c.id
+          })))
+          
           loading.value = false
           error.value = null
-          console.log(`✅ Cargados ${courses.value.length} cursos desde Firestore`)
         },
         (err) => {
           console.error('❌ Error en onSnapshot:', err)
