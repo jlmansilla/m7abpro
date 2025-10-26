@@ -35,10 +35,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-base-200">
+  <div class="home-container">
     <NavBar />
-
-    <div class="pt-32 pb-8">
+    
+    <!-- Contenedor principal con espacio fijo -->
+    <main class="main-content">
       <div class="container mx-auto px-4">
         <div class="mb-8">
           <h1 class="text-3xl font-bold">Cursos Disponibles</h1>
@@ -71,7 +72,7 @@ onUnmounted(() => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
     <div v-if="authStore.showWelcomeModal" class="modal modal-open">
       <div class="modal-box">
@@ -85,4 +86,28 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.home-container {
+  min-height: 100vh;
+  background-color: hsl(var(--b2));
+  position: relative;
+}
+
+.main-content {
+  padding-top: 100px; /* Espacio fijo desde la parte superior */
+  padding-bottom: 2rem;
+  min-height: calc(100vh - 100px);
+}
+
+/* Asegurar que el navbar tenga altura consistente */
+:deep(.fixed) {
+  height: 80px; /* Altura fija para el navbar */
+  display: flex;
+  align-items: center;
+}
+
+/* Reset adicional para contenedores */
+:deep(.container) {
+  margin-top: 0 !important;
+}
+</style>
