@@ -28,21 +28,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-neutral text-neutral-content shadow-lg fixed top-0 left-0 right-0 z-50 w-full h-16 px-8 py-4">
+  <div class="bg-slate-800 text-white shadow-lg fixed top-0 left-0 right-0 z-50 w-full h-16 px-8 py-4 border-b-2 border-slate-700">
     <div class="flex items-center justify-between w-full h-full">
       <!-- Logo - izquierda -->
       <div>
-        <a @click="router.push('/home')" class="text-2xl font-bold cursor-pointer hover:text-primary transition-colors">
+        <a @click="router.push('/home')" class="text-2xl font-bold cursor-pointer text-white hover:text-blue-400 transition-colors">
           AdWeb Online
         </a>
       </div>
       
       <!-- Enlaces centrales -->
       <div class="flex items-center gap-12">
-        <a @click="router.push('/home')" class="text-lg font-medium cursor-pointer hover:text-primary hover:underline underline-offset-8 transition-all nav-link">
+        <a @click="router.push('/home')" class="text-lg font-medium cursor-pointer text-white hover:text-blue-400 hover:underline underline-offset-8 transition-all nav-link">
           Cursos
         </a>
-        <a @click="router.push('/admin')" class="text-lg font-medium cursor-pointer hover:text-primary hover:underline underline-offset-8 transition-all">
+        <a @click="router.push('/admin')" class="text-lg font-medium cursor-pointer text-white hover:text-blue-400 hover:underline underline-offset-8 transition-all">
           Administración
         </a>
       </div>
