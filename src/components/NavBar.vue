@@ -29,9 +29,9 @@ onMounted(() => {
       <a class="btn btn-ghost normal-case text-xl" @click="router.push('/home')">AdWeb Online</a>
     </div>
     <div class="navbar-center">
-      <div class="flex items-center gap-3">
-        <a class="btn bg-primary text-primary-content hover:bg-primary/90 shadow-md px-6" @click="router.push('/home')">Cursos</a>
-        <a class="btn bg-success text-success-content hover:bg-success/90 shadow-md px-6" @click="router.push('/admin')">Administración</a>
+      <div class="flex gap-4">
+        <a class="btn btn-ghost" @click="router.push('/home')">Cursos</a>
+        <a class="btn btn-ghost" @click="router.push('/admin')">Administración</a>
       </div>
     </div>
     <div class="navbar-end">
@@ -46,4 +46,5 @@ onMounted(() => {
 </template>
 
 <style scoped></style>
+
 
