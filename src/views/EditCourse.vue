@@ -40,61 +40,66 @@ async function confirmUpdateCourse() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-base-200">
+  <div class="min-h-screen bg-gray-100">
     <NavBar />
-    <div class="container mx-auto p-4 pt-24">
-      <h1 class="text-3xl font-bold mb-6">Editar Curso</h1>
-      
-      <div v-if="course" class="max-w-lg mx-auto bg-base-100 p-8 rounded-lg shadow-xl">
-        <form @submit.prevent="showUpdateConfirmModal = true">
-          <div class="form-control w-full mb-2">
-            <label class="label"><span class="label-text">Código</span></label>
-            <input v-model="course.codigo" type="text" class="input input-bordered" />
-          </div>
 
-          <div class="form-control w-full mb-2">
-            <label class="label"><span class="label-text">Nombre</span></label>
-            <input v-model="course.nombre" type="text" class="input input-bordered" />
-          </div>
+    <main class="pt-24 pb-8">
+      <div class="container mx-auto px-4">
+        <header class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-800">Editar Curso</h1>
+        </header>
 
-          <div class="form-control w-full mb-2">
-            <label class="label"><span class="label-text">Precio</span></label>
-            <input v-model="course.precio" type="number" class="input input-bordered" />
-          </div>
+        <div v-if="course" class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
+          <form @submit.prevent="showUpdateConfirmModal = true">
+            <div class="form-control w-full mb-4">
+              <label class="label"><span class="label-text">Código</span></label>
+              <input v-model="course.codigo" type="text" class="input input-bordered w-full" />
+            </div>
 
-          <div class="form-control w-full mb-2">
-            <label class="label"><span class="label-text">Duración</span></label>
-            <input v-model="course.duracion" type="text" class="input input-bordered" />
-          </div>
+            <div class="form-control w-full mb-4">
+              <label class="label"><span class="label-text">Nombre</span></label>
+              <input v-model="course.nombre" type="text" class="input input-bordered w-full" />
+            </div>
 
-          <div class="form-control w-full mb-2">
-            <label class="label"><span class="label-text">Descripción</span></label>
-            <textarea v-model="course.descripcion" class="textarea textarea-bordered"></textarea>
-          </div>
+            <div class="form-control w-full mb-4">
+              <label class="label"><span class="label-text">Precio</span></label>
+              <input v-model="course.precio" type="number" class="input input-bordered w-full" />
+            </div>
 
-          <div class="form-control w-full mb-2">
-            <label class="label"><span class="label-text">Cupos</span></label>
-            <input v-model="course.cupos" type="number" class="input input-bordered" />
-          </div>
+            <div class="form-control w-full mb-4">
+              <label class="label"><span class="label-text">Duración</span></label>
+              <input v-model="course.duracion" type="text" class="input input-bordered w-full" />
+            </div>
 
-          <div class="form-control w-full mb-2">
-            <label class="label"><span class="label-text">URL de Imagen</span></label>
-            <input v-model="course.img" type="url" class="input input-bordered" />
-          </div>
+            <div class="form-control w-full mb-4">
+              <label class="label"><span class="label-text">Descripción</span></label>
+              <textarea v-model="course.descripcion" class="textarea textarea-bordered w-full"></textarea>
+            </div>
 
-          <div class="flex justify-end gap-4 mt-6">
-            <button type="button" @click="router.push('/admin')" class="btn">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Actualizar Curso</button>
-          </div>
-        </form>
+            <div class="form-control w-full mb-4">
+              <label class="label"><span class="label-text">Cupos</span></label>
+              <input v-model="course.cupos" type="number" class="input input-bordered w-full" />
+            </div>
+
+            <div class="form-control w-full mb-4">
+              <label class="label"><span class="label-text">URL de Imagen</span></label>
+              <input v-model="course.img" type="url" class="input input-bordered w-full" />
+            </div>
+
+            <div class="flex justify-end gap-4 mt-6">
+              <button type="button" @click="router.push('/admin')" class="btn">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Actualizar Curso</button>
+            </div>
+          </form>
+        </div>
+        
+        <div v-else class="text-center py-16">
+          <h2 class="text-2xl font-bold text-gray-700">Cargando información del curso...</h2>
+        </div>
       </div>
-      
-      <div v-else class="alert alert-warning">
-        <span>Cargando información del curso...</span>
-      </div>
-    </div>
+    </main>
 
-    <!-- Modal de confirmación para actualizar -->
+    <!-- Update Confirmation Modal -->
     <dialog :class="{ 'modal-open': showUpdateConfirmModal }" class="modal">
       <div class="modal-box">
         <h3 class="font-bold text-lg">Confirmar Actualización</h3>
@@ -107,5 +112,3 @@ async function confirmUpdateCourse() {
     </dialog>
   </div>
 </template>
-
-<style scoped></style>
