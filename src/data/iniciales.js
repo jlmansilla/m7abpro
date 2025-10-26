@@ -1,5 +1,5 @@
 // Asumiendo que ya has inicializado Firebase y Firestore
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
 const db = getFirestore();
 const cursosCollectionRef = collection(db, 'cursos');
@@ -55,10 +55,19 @@ const cursosParaAgregar = [
 export async function agregarCursos() {
   for (const cursoData of cursosParaAgregar) {
     try {
-      const docRef = await addDoc(cursosCollectionRef, cursoData);
-      console.log("Curso agregado con ID: ", docRef.id, " Datos:", cursoData.nombre);
+      // Verificar si ya existe un curso con este código
+      const q = query(cursosCollectionRef, where('codigo', '==', cursoData.codigo));
+      const querySnapshot = await getDocs(q);
+      
+      if (querySnapshot.empty) {
+        // No existe un curso con este código, agregarlo
+        const docRef = await addDoc(cursosCollectionRef, cursoData);
+        console.log("✅ Curso agregado con ID: ", docRef.id, " Datos:", cursoData.nombre);
+      } else {
+        console.log("⏭️ El curso", cursoData.nombre, "ya existe en Firestore, omitiendo...");
+      }
     } catch (e) {
-      console.error("Error al agregar el curso", cursoData.nombre, ": ", e);
+      console.error("❌ Error al verificar/agregar el curso", cursoData.nombre, ": ", e);
     }
   }
 }

@@ -20,21 +20,14 @@ function closeWelcomeModal() {
 onMounted(async () => {
   unsubscribe = coursesStore.subscribeToCourses()
   
-  // Esperar un poco para que se carguen los cursos desde Firestore
-  setTimeout(async () => {
-    // Si no hay cursos, cargar los iniciales
-    if (coursesStore.courses.length === 0) {
-      console.log('No hay cursos en Firestore, cargando cursos iniciales...')
-      try {
-        await agregarCursos()
-        console.log('✅ Cursos iniciales cargados exitosamente')
-      } catch (error) {
-        console.error('❌ Error al cargar cursos iniciales:', error)
-      }
-    } else {
-      console.log('✅ Ya existen cursos en Firestore')
-    }
-  }, 1000) // Esperar 1 segundo para que se complete la suscripción
+  // Cargar cursos iniciales (la función ya verifica duplicados)
+  console.log('📚 Verificando y cargando cursos iniciales...')
+  try {
+    await agregarCursos()
+    console.log('✅ Carga de cursos completada')
+  } catch (error) {
+    console.error('❌ Error al cargar cursos iniciales:', error)
+  }
 })
 
 onUnmounted(() => {

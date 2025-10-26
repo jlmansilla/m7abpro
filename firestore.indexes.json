@@ -1,4 +1,15 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "cursos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "codigo",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }
