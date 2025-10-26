@@ -20,7 +20,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
+      - run: npm cache clean --force
       - run: npm ci
+
+      - name: Clean dist directory
+        run: rm -rf dist
 
       - name: Build
         env:
