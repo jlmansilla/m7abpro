@@ -24,15 +24,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="navbar bg-primary text-primary-content fixed top-0 left-0 right-0 z-50 shadow-lg">
+  <div class="navbar bg-neutral text-neutral-content fixed top-0 left-0 right-0 z-50 shadow-lg">
     <div class="navbar-start">
       <a class="btn btn-ghost normal-case text-xl" @click="router.push('/home')">AdWeb Online</a>
     </div>
     <div class="navbar-center">
-      <ul class="menu menu-horizontal px-1">
-        <li><a @click="router.push('/home')">Cursos</a></li>
-        <li><a @click="router.push('/admin')">Administración</a></li>
-      </ul>
+      <div class="flex items-center gap-4">
+        <a class="btn btn-ghost" @click="router.push('/home')">Cursos</a>
+        <a class="btn btn-ghost" @click="router.push('/admin')">Administración</a>
+      </div>
     </div>
     <div class="navbar-end">
       <div v-if="authStore.user" class="flex items-center gap-2">
