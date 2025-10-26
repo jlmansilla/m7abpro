@@ -11,7 +11,6 @@ const coursesStore = useCoursesStore()
 // Estados para modales
 const showAddModal = ref(false)
 const showDeleteModal = ref(false)
-const showConfirmAddModal = ref(false)
 const courseToDelete = ref(null)
 
 // Formulario de nuevo curso
@@ -67,9 +66,6 @@ async function confirmAddCourse() {
     await coursesStore.addCourse(courseData)
     
     showAddModal.value = false
-    showConfirmAddModal.value = false
-    
-    // Mostrar alerta de éxito
     alert('Curso agregado exitosamente')
   } catch (error) {
     alert('Error al agregar el curso: ' + error.message)
@@ -109,10 +105,10 @@ async function toggleCourseStatus(course) {
 </script>
 
 <template>
-  <div>
+  <div class="min-h-screen bg-base-200">
     <NavBar />
     
-    <div class="container mx-auto p-4">
+    <div class="container mx-auto p-4 pt-24">
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">Administración de Cursos</h1>
         <button @click="openAddModal" class="btn btn-primary">
@@ -123,7 +119,7 @@ async function toggleCourseStatus(course) {
         </button>
       </div>
 
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto bg-base-100 rounded-lg shadow">
         <table class="table table-zebra w-full">
           <thead>
             <tr>
@@ -140,7 +136,11 @@ async function toggleCourseStatus(course) {
           <tbody>
             <tr v-for="course in coursesStore.courses" :key="course.id">
               <td>
-                <img :src="course.img" :alt="course.nombre" class="w-16 h-16 object-cover rounded" />
+                <div class="avatar">
+                  <div class="w-16 rounded">
+                    <img :src="course.img" :alt="course.nombre" />
+                  </div>
+                </div>
               </td>
               <td>{{ course.codigo }}</td>
               <td>{{ course.nombre }}</td>
@@ -157,12 +157,8 @@ async function toggleCourseStatus(course) {
               </td>
               <td>
                 <div class="flex gap-2">
-                  <button @click="editCourse(course.id)" class="btn btn-sm btn-info">
-                    Editar
-                  </button>
-                  <button @click="openDeleteModal(course)" class="btn btn-sm btn-error">
-                    Eliminar
-                  </button>
+                  <button @click="editCourse(course.id)" class="btn btn-sm btn-info">Editar</button>
+                  <button @click="openDeleteModal(course)" class="btn btn-sm btn-error">Eliminar</button>
                 </div>
               </td>
             </tr>
@@ -177,76 +173,45 @@ async function toggleCourseStatus(course) {
 
     <!-- Modal para agregar curso -->
     <dialog :class="{ 'modal-open': showAddModal }" class="modal">
-      <div class="modal-box">
+      <div class="modal-box w-11/12 max-w-5xl">
         <h3 class="font-bold text-lg mb-4">Agregar Nuevo Curso</h3>
         
-        <div class="form-control w-full mb-2">
-          <label class="label">
-            <span class="label-text">Código</span>
-          </label>
-          <input v-model="newCourse.codigo" type="text" class="input input-bordered" required />
-        </div>
-
-        <div class="form-control w-full mb-2">
-          <label class="label">
-            <span class="label-text">Nombre</span>
-          </label>
-          <input v-model="newCourse.nombre" type="text" class="input input-bordered" required />
-        </div>
-
-        <div class="form-control w-full mb-2">
-          <label class="label">
-            <span class="label-text">Precio</span>
-          </label>
-          <input v-model="newCourse.precio" type="number" class="input input-bordered" required />
-        </div>
-
-        <div class="form-control w-full mb-2">
-          <label class="label">
-            <span class="label-text">Duración</span>
-          </label>
-          <input v-model="newCourse.duracion" type="text" class="input input-bordered" required />
-        </div>
-
-        <div class="form-control w-full mb-2">
-          <label class="label">
-            <span class="label-text">Descripción</span>
-          </label>
-          <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered" required></textarea>
-        </div>
-
-        <div class="form-control w-full mb-2">
-          <label class="label">
-            <span class="label-text">Cupos</span>
-          </label>
-          <input v-model="newCourse.cupos" type="number" class="input input-bordered" required />
-        </div>
-
-        <div class="form-control w-full mb-2">
-          <label class="label">
-            <span class="label-text">URL de Imagen</span>
-          </label>
-          <input v-model="newCourse.img" type="url" class="input input-bordered" required />
-        </div>
-
-        <div class="modal-action">
-          <button @click="showAddModal = false" class="btn">Cancelar</button>
-          <button @click="showConfirmAddModal = true" class="btn btn-primary">
-            Agregar Curso
-          </button>
-        </div>
-      </div>
-    </dialog>
-
-    <!-- Modal de confirmación para agregar -->
-    <dialog :class="{ 'modal-open': showConfirmAddModal }" class="modal">
-      <div class="modal-box">
-        <h3 class="font-bold text-lg">Confirmar Agregado</h3>
-        <p class="py-4">¿Deseas agregar este curso a la base de datos?</p>
-        <div class="modal-action">
-          <button @click="showConfirmAddModal = false" class="btn">Cancelar</button>
-          <button @click="confirmAddCourse()" class="btn btn-primary">Agregar Curso</button>
-        </div>
+        <form @submit.prevent="confirmAddCourse">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="form-control">
+              <label class="label"><span class="label-text">Código</span></label>
+              <input v-model="newCourse.codigo" type="text" class="input input-bordered" required />
+            </div>
+            <div class="form-control">
+              <label class="label"><span class="label-text">Nombre</span></label>
+              <input v-model="newCourse.nombre" type="text" class="input input-bordered" required />
+            </div>
+            <div class="form-control">
+              <label class="label"><span class="label-text">Precio</span></label>
+              <input v-model="newCourse.precio" type="number" class="input input-bordered" required />
+            </div>
+            <div class="form-control">
+              <label class="label"><span class="label-text">Duración</span></label>
+              <input v-model="newCourse.duracion" type="text" class="input input-bordered" required />
+            </div>
+            <div class="form-control md:col-span-2">
+              <label class="label"><span class="label-text">Descripción</span></label>
+              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered" required></textarea>
+            </div>
+            <div class="form-control">
+              <label class="label"><span class="label-text">Cupos</span></label>
+              <input v-model="newCourse.cupos" type="number" class="input input-bordered" required />
+            </div>
+            <div class="form-control md:col-span-2">
+              <label class="label"><span class="label-text">URL de Imagen</span></label>
+              <input v-model="newCourse.img" type="url" class="input input-bordered" required />
+            </div>
+          </div>
+          <div class="modal-action mt-6">
+            <button type="button" @click="showAddModal = false" class="btn">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Agregar Curso</button>
+          </div>
+        </form>
       </div>
     </dialog>
 
@@ -254,9 +219,7 @@ async function toggleCourseStatus(course) {
     <dialog :class="{ 'modal-open': showDeleteModal }" class="modal">
       <div class="modal-box">
         <h3 class="font-bold text-lg">Confirmar Eliminación</h3>
-        <p class="py-4">
-          ¿Estás seguro de que deseas eliminar el curso "{{ courseToDelete?.nombre }}"?
-        </p>
+        <p class="py-4">¿Estás seguro de que deseas eliminar el curso "{{ courseToDelete?.nombre }}"?</p>
         <div class="modal-action">
           <button @click="showDeleteModal = false" class="btn">Cancelar</button>
           <button @click="confirmDeleteCourse()" class="btn btn-error">Sí, borrar</button>

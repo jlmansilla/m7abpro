@@ -2,15 +2,15 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
-const { user, logout } = useAuth()
+const authStore = useAuthStore()
 
 async function handleLogout() {
   try {
     console.log('🚪 Intentando cerrar sesión...')
-    await logout()
+    await authStore.logout()
     console.log('✅ Sesión cerrada exitosamente')
     router.push('/login')
   } catch (error) {
@@ -19,45 +19,39 @@ async function handleLogout() {
 }
 
 onMounted(() => {
-  console.log('🔍 NavBar montado - Usuario:', user)
+  console.log('🔍 NavBar montado - Usuario:', authStore.user)
 })
 </script>
 
 <template>
-  <div style="position: fixed; top: 0; left: 0; right: 0; background: #2563eb; color: white; padding: 15px; z-index: 99999; box-shadow: 0 2px 10px rgba(0,0,0,0.2); display: flex; justify-content: space-between; align-items: center;">
-    <!-- Izquierda: Logo y enlaces -->
-    <div style="display: flex; gap: 20px; align-items: center;">
-      <span style="font-size: 20px; font-weight: bold; cursor: pointer;" @click="router.push('/home')">AdWeb Online</span>
-      <span style="cursor: pointer; padding: 5px;" @click="router.push('/home')">Cursos</span>
-      <span style="cursor: pointer; padding: 5px;" @click="router.push('/admin')">Administración</span>
+  <div class="navbar bg-primary text-primary-content fixed top-0 left-0 right-0 z-50 shadow-lg">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <label tabindex="0" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </label>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a @click="router.push('/home')">Cursos</a></li>
+          <li><a @click="router.push('/admin')">Administración</a></li>
+        </ul>
+      </div>
+      <a class="btn btn-ghost normal-case text-xl" @click="router.push('/home')">AdWeb Online</a>
     </div>
-    
-    <!-- Derecha: Email y BOTÓN LOGOUT -->
-    <div style="display: flex; gap: 10px; align-items: center;">
-      <span v-if="user" style="background: #1d4ed8; padding: 5px 12px; border-radius: 5px; font-size: 14px;">{{ user.email }}</span>
-      
-      <!-- BOTÓN LOGOUT -->
-      <button 
-        @click="handleLogout" 
-        type="button"
-        style="
-          background: #dc2626;
-          color: white;
-          border: none;
-          padding: 10px 25px;
-          border-radius: 6px;
-          font-weight: bold;
-          font-size: 15px;
-          cursor: pointer;
-          box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-          transition: all 0.2s;
-          min-width: 130px;
-        "
-        @mouseover="$event.target.style.background = '#b91c1c'"
-        @mouseout="$event.target.style.background = '#dc2626'"
-      >
-        🚪 SALIR
-      </button>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+        <li><a @click="router.push('/home')">Cursos</a></li>
+        <li><a @click="router.push('/admin')">Administración</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <div v-if="authStore.user" class="flex items-center gap-2">
+        <span class="font-semibold">{{ authStore.user.email }}</span>
+        <button @click="handleLogout" class="btn btn-error btn-sm">
+          Salir
+        </button>
+      </div>
     </div>
   </div>
 </template>

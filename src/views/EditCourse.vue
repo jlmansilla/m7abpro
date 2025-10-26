@@ -1,78 +1,37 @@
 <!-- src/views/EditCourse.vue -->
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useCoursesStore } from '@/stores/courses'
 import NavBar from '@/components/NavBar.vue'
 
-const router = useRouter()
 const route = useRoute()
+const router = useRouter()
 const coursesStore = useCoursesStore()
 
-const showConfirmModal = ref(false)
-const editedCourse = ref({
-  codigo: '',
-  nombre: '',
-  estado: true,
-  precio: '',
-  duracion: '',
-  descripcion: '',
-  cupos: '',
-  inscritos: 0,
-  img: ''
-})
-
-let unsubscribe = null
+const courseId = route.params.id
+const course = ref(null)
+const showUpdateConfirmModal = ref(false)
 
 onMounted(() => {
-  unsubscribe = coursesStore.subscribeToCourses()
-  // Cargar el curso existente
-  const course = coursesStore.courses.find(c => c.id === route.params.id)
-  if (course) {
-    editedCourse.value = {
-      codigo: course.codigo,
-      nombre: course.nombre,
-      estado: course.estado,
-      precio: course.precio,
-      duracion: course.duracion,
-      descripcion: course.descripcion,
-      cupos: course.cupos,
-      inscritos: course.inscritos,
-      img: course.img
-    }
+  const foundCourse = coursesStore.courses.find(c => c.id === courseId)
+  if (foundCourse) {
+    course.value = { ...foundCourse }
+  } else {
+    router.push('/admin')
   }
 })
 
-onUnmounted(() => {
-  if (unsubscribe) {
-    unsubscribe()
-  }
-})
-
-const currentCourse = computed(() => {
-  return coursesStore.courses.find(c => c.id === route.params.id)
-})
-
-async function confirmUpdate() {
+async function confirmUpdateCourse() {
   try {
     const courseData = {
-      codigo: editedCourse.value.codigo,
-      nombre: editedCourse.value.nombre,
-      estado: editedCourse.value.estado,
-      precio: String(editedCourse.value.precio),
-      duracion: editedCourse.value.duracion,
-      descripcion: editedCourse.value.descripcion,
-      cupos: parseInt(editedCourse.value.cupos),
-      inscritos: parseInt(editedCourse.value.inscritos),
-      img: editedCourse.value.img
+      ...course.value,
+      precio: String(course.value.precio),
+      cupos: parseInt(course.value.cupos)
     }
-    
-    await coursesStore.updateCourse(route.params.id, courseData)
-    
-    showConfirmModal.value = false
+    await coursesStore.updateCourse(courseId, courseData)
+    showUpdateConfirmModal.value = false
     alert('Curso actualizado exitosamente')
-    
-    // Redirigir a administración
     router.push('/admin')
   } catch (error) {
     alert('Error al actualizar el curso: ' + error.message)
@@ -81,108 +40,68 @@ async function confirmUpdate() {
 </script>
 
 <template>
-  <div>
+  <div class="min-h-screen bg-base-200">
     <NavBar />
-    
-    <div class="container mx-auto p-4 max-w-3xl">
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold">Editar Curso</h1>
-        <button @click="router.push('/admin')" class="btn btn-ghost">
-          Volver
-        </button>
+    <div class="container mx-auto p-4 pt-24">
+      <h1 class="text-3xl font-bold mb-6">Editar Curso</h1>
+      
+      <div v-if="course" class="max-w-lg mx-auto bg-base-100 p-8 rounded-lg shadow-xl">
+        <form @submit.prevent="showUpdateConfirmModal = true">
+          <div class="form-control w-full mb-2">
+            <label class="label"><span class="label-text">Código</span></label>
+            <input v-model="course.codigo" type="text" class="input input-bordered" />
+          </div>
+
+          <div class="form-control w-full mb-2">
+            <label class="label"><span class="label-text">Nombre</span></label>
+            <input v-model="course.nombre" type="text" class="input input-bordered" />
+          </div>
+
+          <div class="form-control w-full mb-2">
+            <label class="label"><span class="label-text">Precio</span></label>
+            <input v-model="course.precio" type="number" class="input input-bordered" />
+          </div>
+
+          <div class="form-control w-full mb-2">
+            <label class="label"><span class="label-text">Duración</span></label>
+            <input v-model="course.duracion" type="text" class="input input-bordered" />
+          </div>
+
+          <div class="form-control w-full mb-2">
+            <label class="label"><span class="label-text">Descripción</span></label>
+            <textarea v-model="course.descripcion" class="textarea textarea-bordered"></textarea>
+          </div>
+
+          <div class="form-control w-full mb-2">
+            <label class="label"><span class="label-text">Cupos</span></label>
+            <input v-model="course.cupos" type="number" class="input input-bordered" />
+          </div>
+
+          <div class="form-control w-full mb-2">
+            <label class="label"><span class="label-text">URL de Imagen</span></label>
+            <input v-model="course.img" type="url" class="input input-bordered" />
+          </div>
+
+          <div class="flex justify-end gap-4 mt-6">
+            <button type="button" @click="router.push('/admin')" class="btn">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Actualizar Curso</button>
+          </div>
+        </form>
       </div>
-
-      <div v-if="!currentCourse" class="alert alert-error">
-        <span>Curso no encontrado</span>
-      </div>
-
-      <div v-else class="card bg-base-100 shadow-xl">
-        <div class="card-body">
-          <h2 class="card-title">{{ currentCourse.nombre }}</h2>
-          
-          <div class="form-control w-full mb-2">
-            <label class="label">
-              <span class="label-text">Código</span>
-            </label>
-            <input v-model="editedCourse.codigo" type="text" class="input input-bordered" required />
-          </div>
-
-          <div class="form-control w-full mb-2">
-            <label class="label">
-              <span class="label-text">Nombre</span>
-            </label>
-            <input v-model="editedCourse.nombre" type="text" class="input input-bordered" required />
-          </div>
-
-          <div class="form-control w-full mb-2">
-            <label class="label">
-              <span class="label-text">Precio</span>
-            </label>
-            <input v-model="editedCourse.precio" type="number" class="input input-bordered" required />
-          </div>
-
-          <div class="form-control w-full mb-2">
-            <label class="label">
-              <span class="label-text">Duración</span>
-            </label>
-            <input v-model="editedCourse.duracion" type="text" class="input input-bordered" required />
-          </div>
-
-          <div class="form-control w-full mb-2">
-            <label class="label">
-              <span class="label-text">Descripción</span>
-            </label>
-            <textarea v-model="editedCourse.descripcion" class="textarea textarea-bordered" required></textarea>
-          </div>
-
-          <div class="form-control w-full mb-2">
-            <label class="label">
-              <span class="label-text">Cupos</span>
-            </label>
-            <input v-model="editedCourse.cupos" type="number" class="input input-bordered" required />
-          </div>
-
-          <div class="form-control w-full mb-2">
-            <label class="label">
-              <span class="label-text">Inscritos</span>
-            </label>
-            <input v-model="editedCourse.inscritos" type="number" class="input input-bordered" required />
-          </div>
-
-          <div class="form-control w-full mb-2">
-            <label class="label">
-              <span class="label-text">URL de Imagen</span>
-            </label>
-            <input v-model="editedCourse.img" type="url" class="input input-bordered" required />
-          </div>
-
-          <div class="form-control w-full mb-4">
-            <label class="label cursor-pointer">
-              <span class="label-text">Estado (Activo)</span>
-              <input v-model="editedCourse.estado" type="checkbox" class="toggle toggle-success" />
-            </label>
-          </div>
-
-          <div class="card-actions justify-end">
-            <button @click="router.push('/admin')" class="btn">Cancelar</button>
-            <button @click="showConfirmModal = true" class="btn btn-primary">
-              Actualizar Curso
-            </button>
-          </div>
-        </div>
+      
+      <div v-else class="alert alert-warning">
+        <span>Cargando información del curso...</span>
       </div>
     </div>
 
-    <!-- Modal de confirmación de actualización -->
-    <dialog :class="{ 'modal-open': showConfirmModal }" class="modal">
+    <!-- Modal de confirmación para actualizar -->
+    <dialog :class="{ 'modal-open': showUpdateConfirmModal }" class="modal">
       <div class="modal-box">
         <h3 class="font-bold text-lg">Confirmar Actualización</h3>
-        <p class="py-4">¿Deseas actualizar este curso?</p>
+        <p class="py-4">¿Estás seguro de que deseas guardar los cambios en este curso?</p>
         <div class="modal-action">
-          <button @click="showConfirmModal = false" class="btn">Cancelar</button>
-          <button @click="confirmUpdate()" class="btn btn-primary">
-            Actualizar Curso
-          </button>
+          <button @click="showUpdateConfirmModal = false" class="btn">Cancelar</button>
+          <button @click="confirmUpdateCourse()" class="btn btn-primary">Sí, actualizar</button>
         </div>
       </div>
     </dialog>
@@ -190,3 +109,4 @@ async function confirmUpdate() {
 </template>
 
 <style scoped></style>
+

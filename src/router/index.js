@@ -1,6 +1,6 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
+import { useAuthStore } from '@/stores/auth'
 import Login from '@/views/Login.vue'
 import Home from '@/views/Home.vue'
 
@@ -23,12 +23,12 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
-  const { waitForAuthInit, user } = useAuth()
-  await waitForAuthInit()
+  const authStore = useAuthStore()
+  await authStore.waitForAuthInit()
   const isPublic = !!to.meta.public
 
-  if (!user.value && !isPublic) return { name: 'login', query: { redirect: to.fullPath } }
-  if (user.value && (to.name === 'login' || to.name === 'register')) return { name: 'home' }
+  if (!authStore.user && !isPublic) return { name: 'login', query: { redirect: to.fullPath } }
+  if (authStore.user && (to.name === 'login' || to.name === 'register')) return { name: 'home' }
   return true
 })
 

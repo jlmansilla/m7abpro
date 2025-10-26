@@ -1,12 +1,12 @@
 <script setup>
-import { useAuth } from '@/composables/useAuth'
+import { useAuthStore } from '@/stores/auth'
 import { watchEffect } from 'vue'
 import { agregarCursos } from '@/data/iniciales'
 
-const { user } = useAuth()
+const authStore = useAuthStore()
 
 watchEffect(async () => {
-  if (user.value) {
+  if (authStore.user) {
     await agregarCursos()
   }
 })

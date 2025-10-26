@@ -1,33 +1,25 @@
 <!-- src/views/Register.vue -->
 <script setup>
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useAuth } from '@/composables/useAuth'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const email = ref('')
 const password = ref('')
-const confirm = ref('')
 const loading = ref(false)
 const localError = ref('')
 
 const router = useRouter()
-const route = useRoute()
-const { register, errorMsg } = useAuth()
+const authStore = useAuthStore()
 
 async function onSubmit() {
   localError.value = ''
-  if (password.value !== confirm.value) {
-    localError.value = 'Las contraseñas no coinciden.'
-    return
-  }
-
   loading.value = true
   try {
-    await register(email.value, password.value, { requireVerification: false })
-    const redirect = route.query.redirect || { name: 'home' }
-    router.push(redirect)
+    await authStore.register(email.value, password.value)
+    router.push({ name: 'home' })
   } catch {
-    localError.value = errorMsg.value || 'No se pudo crear la cuenta.'
+    localError.value = authStore.errorMsg || 'No se pudo registrar.'
   } finally {
     loading.value = false
   }
@@ -61,22 +53,7 @@ async function onSubmit() {
             <input 
               v-model="password" 
               type="password" 
-              placeholder="Mínimo 6 caracteres" 
-              minlength="6"
-              class="input input-bordered w-full" 
-              required 
-            />
-          </div>
-
-          <div class="form-control w-full mb-4">
-            <label class="label">
-              <span class="label-text">Confirmar contraseña</span>
-            </label>
-            <input 
-              v-model="confirm" 
-              type="password" 
-              placeholder="Repite la contraseña" 
-              minlength="6"
+              placeholder="••••••••" 
               class="input input-bordered w-full" 
               required 
             />
@@ -102,8 +79,8 @@ async function onSubmit() {
         <div class="text-center mt-4">
           <p>
             ¿Ya tienes cuenta? 
-            <router-link :to="{ name: 'login' }" class="link link-primary">
-              Inicia sesión
+            <router-link :to="{ name:'login' }" class="link link-primary">
+              Iniciar sesión
             </router-link>
           </p>
         </div>
