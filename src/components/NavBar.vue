@@ -40,19 +40,37 @@ onMounted(() => {
         </a>
       </div>
       
-      <!-- SIEMPRE mostrar botón de cerrar sesión -->
+      <!-- LADO DERECHO: Email + LOGOUT -->
       <div class="flex items-center gap-3">
-        <!-- Mostrar email si hay usuario -->
+        <!-- Email del usuario -->
         <span v-if="user" class="text-sm font-medium bg-blue-700 px-3 py-1 rounded">{{ user.email }}</span>
+        <span v-else class="text-sm font-medium bg-gray-700 px-3 py-1 rounded">No autenticado</span>
         
-        <!-- Botón de cerrar sesión - SIEMPRE VISIBLE -->
+        <!-- BOTÓN DE LOGOUT - 100% VISIBLE -->
         <button 
           @click="handleLogout" 
           type="button"
-          class="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-red-800"
-          style="min-width: 140px; font-size: 16px; z-index: 9999; position: relative;"
+          style="
+            background-color: #dc2626;
+            color: white;
+            font-weight: bold;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: 2px solid #991b1b;
+            cursor: pointer;
+            font-size: 16px;
+            min-width: 150px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: all 0.2s;
+            position: relative;
+            z-index: 99999;
+          "
+          onmouseover="this.style.backgroundColor='#b91c1c'; this.style.transform='scale(1.05)'"
+          onmouseout="this.style.backgroundColor='#dc2626'; this.style.transform='scale(1)'"
+          onmousedown="this.style.backgroundColor='#991b1b'"
+          onmouseup="this.style.backgroundColor='#dc2626'"
         >
-          🚪 SALIR
+          🚪 SALIR / LOGOUT
         </button>
       </div>
     </div>
