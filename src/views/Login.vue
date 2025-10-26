@@ -28,63 +28,101 @@ async function onSubmit() {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-base-200">
-    <div class="card w-96 bg-base-100 shadow-xl">
-      <div class="card-body">
-        <h2 class="card-title text-3xl mb-4 justify-center">Iniciar Sesión</h2>
-        
-        <form @submit.prevent="onSubmit">
-          <div class="form-control w-full mb-4">
-            <label class="label">
-              <span class="label-text">Correo electrónico</span>
-            </label>
-            <input 
-              v-model="email" 
-              type="email" 
-              placeholder="email@ejemplo.com" 
-              class="input input-bordered w-full" 
-              required 
-            />
-          </div>
-
-          <div class="form-control w-full mb-4">
-            <label class="label">
-              <span class="label-text">Contraseña</span>
-            </label>
-            <input 
-              v-model="password" 
-              type="password" 
-              placeholder="••••••••" 
-              class="input input-bordered w-full" 
-              required 
-            />
-          </div>
-
-          <button 
-            :disabled="loading" 
-            type="submit"
-            class="btn btn-primary w-full"
-          >
-            <span v-if="!loading">Iniciar Sesión</span>
-            <span v-else class="loading loading-spinner"></span>
-          </button>
-        </form>
-
-        <div v-if="localError" class="alert alert-error mt-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-cyan-50 to-slate-50 relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-primary/5 to-accent/5 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-secondary/5 to-primary/5 rounded-full blur-3xl"></div>
+    </div>
+    
+    <!-- Main Card -->
+    <div class="glass w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl shadow-elegant-xl border border-white/50 p-8 animate-scale-in z-10">
+      <!-- Logo & Header -->
+      <div class="text-center mb-8">
+        <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-primary via-secondary to-accent rounded-2xl flex items-center justify-center shadow-lg animate-bounce-subtle">
+          <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
-          <span>{{ localError }}</span>
+        </div>
+        <h2 class="text-3xl font-bold gradient-text mb-2">Bienvenido de nuevo</h2>
+        <p class="text-gray-600">Ingresa a tu cuenta para continuar</p>
+      </div>
+      
+      <form @submit.prevent="onSubmit">
+        <div class="space-y-5">
+          <!-- Email Input -->
+          <div class="form-control">
+            <label class="label mb-2">
+              <span class="label-text font-semibold text-gray-700">Correo electrónico</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <input 
+                v-model="email" 
+                type="email" 
+                placeholder="email@ejemplo.com" 
+                class="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 bg-white" 
+                required 
+              />
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-control">
+            <label class="label mb-2">
+              <span class="label-text font-semibold text-gray-700">Contraseña</span>
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <input 
+                v-model="password" 
+                type="password" 
+                placeholder="••••••••" 
+                class="w-full pl-12 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 bg-white" 
+                required 
+              />
+            </div>
+          </div>
         </div>
 
-        <div class="text-center mt-4">
-          <p>
-            ¿No tienes cuenta? 
-            <router-link :to="{ name:'register' }" class="link link-primary">
-              Crear cuenta
-            </router-link>
-          </p>
-        </div>
+        <!-- Submit Button -->
+        <button 
+          :disabled="loading" 
+          type="submit"
+          class="btn w-full mt-6 bg-gradient-to-r from-primary to-secondary text-white border-none shadow-elegant-lg hover:shadow-3d transition-all duration-300 hover:scale-[1.02] disabled:hover:scale-100"
+        >
+          <span v-if="!loading" class="flex items-center justify-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+            </svg>
+            Iniciar Sesión
+          </span>
+          <span v-else class="loading loading-spinner"></span>
+        </button>
+      </form>
+
+      <!-- Error Message -->
+      <div v-if="localError" class="alert alert-error mt-6 shadow-elegant animate-slide-up">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>{{ localError }}</span>
+      </div>
+
+      <!-- Register Link -->
+      <div class="text-center mt-8 pt-6 border-t border-gray-200">
+        <p class="text-gray-600 mb-2">¿No tienes cuenta?</p>
+        <router-link :to="{ name:'register' }" class="font-semibold gradient-text hover:opacity-80 transition-opacity">
+          Crear cuenta gratis
+        </router-link>
       </div>
     </div>
   </div>
