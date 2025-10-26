@@ -101,7 +101,7 @@ async function toggleCourseStatus(course) {
     <div class="container mx-auto p-4 pt-24">
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">Administración de Cursos</h1>
-        <button @click="openAddModal" class="btn btn-primary">Agregar Curso</button>
+        <button @click="openAddModal" class="btn btn-primary hover:scale-105 transition-all duration-200">Agregar Curso</button>
       </div>
 
       <div class="overflow-x-auto bg-base-100 rounded-lg shadow">
@@ -137,8 +137,8 @@ async function toggleCourseStatus(course) {
               </td>
               <td>
                 <div class="flex gap-2">
-                  <button @click="editCourse(course.id)" class="btn btn-sm btn-info">Editar</button>
-                  <button @click="openDeleteModal(course)" class="btn btn-sm btn-error">Eliminar</button>
+                  <button @click="editCourse(course.id)" class="btn btn-sm btn-primary hover:scale-105 transition-all duration-200">Editar</button>
+                  <button @click="openDeleteModal(course)" class="btn btn-sm btn-secondary hover:scale-105 transition-all duration-200">Eliminar</button>
                 </div>
               </td>
             </tr>
@@ -183,7 +183,7 @@ async function toggleCourseStatus(course) {
           </div>
           <div class="modal-action mt-6">
             <button type="button" @click="showAddModal = false" class="btn">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Agregar Curso</button>
+            <button type="submit" class="btn btn-primary hover:scale-105 transition-all duration-200">Agregar Curso</button>
           </div>
         </form>
       </div>
@@ -195,7 +195,7 @@ async function toggleCourseStatus(course) {
         <p class="py-4">¿Estás seguro de que deseas eliminar el curso "{{ courseToDelete?.nombre }}"?</p>
         <div class="modal-action">
           <button @click="showDeleteModal = false" class="btn">Cancelar</button>
-          <button @click="confirmDeleteCourse()" class="btn btn-error">Sí, borrar</button>
+          <button @click="confirmDeleteCourse()" class="btn btn-secondary hover:scale-105 transition-all duration-200">Sí, borrar</button>
         </div>
       </div>
     </dialog>
