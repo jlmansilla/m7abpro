@@ -4,8 +4,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // Regla para la colección de cursos
     match /cursos/{cursosId} {
-      // Permitir lectura si el usuario está autenticado
-      allow read: if request.auth != null;
+      // Permitir lectura a todos (temporal para diagnóstico)
+      allow read: if true;
       // Permitir escritura solo si el usuario está autenticado
       allow write: if request.auth != null;
     }
