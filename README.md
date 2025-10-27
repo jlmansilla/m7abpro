@@ -180,6 +180,29 @@ firebase deploy --only firestore:rules
    - Activar/desactivar cursos
    - Eliminar cursos (con confirmación)
 
+## 🔑 Credenciales de Prueba
+
+Para facilitar las pruebas de la aplicación, se han creado los siguientes usuarios:
+
+### Usuarios Administradores
+
+Todos los usuarios comparten la misma contraseña: **`123xmi`**
+
+- **contacto@adweb.cl** - Usuario de contacto
+- **gurrutia@adweb.cl** - Gonzalo Urrutia
+- **lcarrillo@adweb.cl** - Luis Carrillo
+- **chernandez@adweb.cl** - Carolina Hernández
+- **jlmansilla@adweb.cl** - Juan Luis Mansilla
+
+### Cómo Usar
+
+1. Accede a la página de Login
+2. Ingresa cualquiera de los emails listados
+3. Ingresa la contraseña: `123xmi`
+4. Una vez autenticado, accede al panel de administración en `/admin`
+
+**Nota**: Todos los usuarios tienen privilegios de administrador y pueden gestionar cursos.
+
 ## 🔒 Seguridad
 
 ### Reglas de Firestore
