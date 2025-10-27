@@ -51,7 +51,7 @@ export const useCoursesStore = defineStore('courses', () => {
           console.log(`📊 Total cursos cargados: ${courses.value.length}`)
           console.log(`✅ Activos (estado: true): ${activos}`)
           console.log(`❌ Inactivos (estado: false): ${inactivos}`)
-          console.log(`⚠️ Sin estado: ${sinEstado}`)
+          console.log(`⚠️ Sin estado/null: ${sinEstado}`)
           console.log('📋 Detalle de cursos:', courses.value.map(c => ({ 
             nombre: c.nombre, 
             estado: c.estado,
