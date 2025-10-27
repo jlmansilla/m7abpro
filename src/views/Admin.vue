@@ -51,6 +51,10 @@ function openAddModal() {
     img: ''
   }
   showAddModal.value = true
+  // Scroll automático después de que el modal se abra
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, 100)
 }
 
 async function confirmAddCourse() {
@@ -78,6 +82,10 @@ async function confirmAddCourse() {
 function openDeleteModal(course) {
   courseToDelete.value = course
   showDeleteModal.value = true
+  // Scroll automático después de que el modal se abra
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, 100)
 }
 
 async function confirmDeleteCourse() {
@@ -162,8 +170,8 @@ async function toggleCourseStatus(course) {
       </div>
     </div>
 
-    <div v-if="showAddModal" class="modal modal-open z-50">
-      <div class="modal-box bg-base-100 shadow-2xl w-11/12 max-w-5xl mx-auto">
+    <div v-if="showAddModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg shadow-2xl border-4 border-blue-600 w-full max-w-5xl max-h-[90vh] overflow-y-auto p-6">
         <h3 class="font-bold text-2xl mb-4 text-primary">➕ Agregar Nuevo Curso</h3>
         <div class="divider"></div>
         <form @submit.prevent="confirmAddCourse">
@@ -203,11 +211,11 @@ async function toggleCourseStatus(course) {
           </div>
         </form>
       </div>
-      <div class="modal-backdrop bg-black/50" @click="showAddModal = false"></div>
+      <div class="absolute inset-0 bg-gray-800/80 -z-10" @click="showAddModal = false"></div>
     </div>
 
-    <div v-if="showDeleteModal" class="modal modal-open z-50">
-      <div class="modal-box bg-base-100 shadow-2xl max-w-sm mx-auto">
+    <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg shadow-2xl border-4 border-red-600 max-w-sm w-full p-6">
         <h3 class="font-bold text-xl mb-3 text-error">⚠️ Confirmar Eliminación</h3>
         <div class="divider my-3"></div>
         <p class="py-2 text-base">¿Estás seguro de que deseas eliminar el curso <strong class="text-error">"{{ courseToDelete?.nombre }}"</strong>?</p>
@@ -217,7 +225,7 @@ async function toggleCourseStatus(course) {
           <button @click="confirmDeleteCourse()" class="btn btn-error btn-sm">Sí, borrar</button>
         </div>
       </div>
-      <div class="modal-backdrop bg-black/50" @click="showDeleteModal = false"></div>
+      <div class="absolute inset-0 bg-gray-800/80 -z-10" @click="showDeleteModal = false"></div>
     </div>
 
     <!-- Toast de éxito - Curso agregado -->

@@ -11,6 +11,8 @@ const coursesStore = useCoursesStore()
 const courseId = route.params.id
 const course = ref(null)
 const showUpdateConfirmModal = ref(false)
+const showSuccessToast = ref(false)
+const showErrorToast = ref(false)
 
 onMounted(() => {
   const foundCourse = coursesStore.courses.find(c => c.id === courseId)
@@ -30,10 +32,17 @@ async function confirmUpdateCourse() {
     }
     await coursesStore.updateCourse(courseId, courseData)
     showUpdateConfirmModal.value = false
-    alert('Curso actualizado exitosamente')
-    router.push('/admin')
+    showSuccessToast.value = true
+    setTimeout(() => {
+      showSuccessToast.value = false
+      router.push('/admin')
+    }, 2000)
   } catch (error) {
-    alert('Error al actualizar el curso: ' + error.message)
+    showUpdateConfirmModal.value = false
+    showErrorToast.value = true
+    setTimeout(() => {
+      showErrorToast.value = false
+    }, 3000)
   }
 }
 </script>
@@ -93,16 +102,38 @@ async function confirmUpdateCourse() {
       </div>
     </div>
 
-    <dialog :class="{ 'modal-open': showUpdateConfirmModal }" class="modal">
-      <div class="modal-box">
-        <h3 class="font-bold text-lg">Confirmar Actualización</h3>
-        <p class="py-4">¿Estás seguro de que deseas guardar los cambios en este curso?</p>
-        <div class="modal-action">
-          <button @click="showUpdateConfirmModal = false" class="btn">Cancelar</button>
-          <button @click="confirmUpdateCourse()" class="btn btn-primary">Sí, actualizar</button>
+    <div v-if="showUpdateConfirmModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-lg shadow-2xl border-4 border-blue-600 max-w-md w-full p-6">
+        <h3 class="font-bold text-xl mb-3 text-blue-600">✨ Confirmar Actualización</h3>
+        <div class="divider my-3"></div>
+        <p class="py-2 text-base">¿Estás seguro de que deseas guardar los cambios en este curso?</p>
+        <div class="mt-4 pt-4 border-t border-gray-300 flex justify-evenly">
+          <button @click="showUpdateConfirmModal = false" class="btn btn-ghost btn-sm">Cancelar</button>
+          <button @click="confirmUpdateCourse()" class="btn btn-primary btn-sm">Sí, actualizar</button>
         </div>
       </div>
-    </dialog>
+      <div class="absolute inset-0 bg-gray-800/80 -z-10" @click="showUpdateConfirmModal = false"></div>
+    </div>
+
+    <!-- Toast de éxito -->
+    <div v-if="showSuccessToast" class="toast toast-top toast-end">
+      <div class="alert alert-success">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>¡Curso actualizado exitosamente!</span>
+      </div>
+    </div>
+
+    <!-- Toast de error -->
+    <div v-if="showErrorToast" class="toast toast-top toast-end">
+      <div class="alert alert-error">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Error al actualizar el curso</span>
+      </div>
+    </div>
   </div>
 </template>
 
