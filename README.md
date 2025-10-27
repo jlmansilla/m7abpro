@@ -219,7 +219,15 @@ Este proyecto es parte del Bootcamp Desarrollo de Aplicaciones Front-end Trainee
 
 ## 👥 Autores
 
-**Desarrollo**: jlmansilla
+**Desarrollo**: 
+<div>
+  Juan Luis Mansilla	https://github.com/jlmansilla
+	Gonzalo Urrutia		https://github.com/gurrutia15
+	Luis Carrillo		https://github.com/lcarrilloq
+	Carolina Hernández	https://github.com/CaroHernz
+</div>
+
+
 
 ---
 
