@@ -85,9 +85,9 @@ async function confirmUpdateCourse() {
             <input v-model="course.cupos" type="number" class="input input-bordered md:w-3/4" />
           </div>
 
-          <div class="form-control w-full mb-4 md:flex md:items-center md:justify-between">
-            <label class="label pb-2 md:pb-0 md:w-1/4"><span class="label-text font-semibold">URL de Imagen</span></label>
-            <input v-model="course.img" type="url" class="input input-bordered md:w-3/4" />
+          <div class="form-control w-full mb-4 md:flex md:items-center md:gap-4">
+            <label class="label pb-2 md:pb-0 md:w-1/4 md:flex-shrink-0"><span class="label-text font-semibold">URL de Imagen</span></label>
+            <input v-model="course.img" type="url" class="input input-bordered md:w-3/4 md:flex-1" placeholder="Ingresa la URL" style="max-width: 100%;" />
           </div>
 
           <div class="flex justify-center gap-4 mt-8 pt-6 border-t border-gray-300">
