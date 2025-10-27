@@ -46,7 +46,7 @@ export const useCoursesStore = defineStore('courses', () => {
           // Diagnóstico: contabilizar cursos por estado
           const activos = courses.value.filter(c => c.estado === true).length
           const inactivos = courses.value.filter(c => c.estado === false).length
-          const sinEstado = courses.value.filter(c => c.estado === undefined).length
+          const sinEstado = courses.value.filter(c => c.estado === undefined || c.estado === null).length
           
           console.log(`📊 Total cursos cargados: ${courses.value.length}`)
           console.log(`✅ Activos (estado: true): ${activos}`)
