@@ -101,7 +101,7 @@ async function toggleCourseStatus(course) {
     <div class="container mx-auto p-4 pt-24">
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">Administración de Cursos</h1>
-        <button @click="openAddModal" class="btn btn-primary hover:scale-105 transition-all duration-200">Agregar Curso</button>
+        <button @click="openAddModal" class="btn btn-primary hover:scale-105 hover:shadow-lg transition-all duration-200 font-semibold">Agregar Curso</button>
       </div>
 
       <div class="overflow-x-auto bg-base-100 rounded-lg shadow">
@@ -120,25 +120,25 @@ async function toggleCourseStatus(course) {
           </thead>
           <tbody>
             <tr v-for="course in coursesStore.courses" :key="course.id">
-              <td>
-                <div class="avatar">
+              <td class="text-center">
+                <div class="avatar mx-auto">
                   <div class="w-16 rounded">
                     <img :src="course.img" :alt="course.nombre" />
                   </div>
                 </div>
               </td>
-              <td>{{ course.codigo }}</td>
-              <td>{{ course.nombre }}</td>
-              <td>${{ parseInt(course.precio).toLocaleString() }}</td>
-              <td>{{ course.duracion }}</td>
-              <td>{{ course.cupos - course.inscritos }} / {{ course.cupos }}</td>
-              <td>
+              <td class="text-center">{{ course.codigo }}</td>
+              <td class="text-center">{{ course.nombre }}</td>
+              <td class="text-center">${{ parseInt(course.precio).toLocaleString() }}</td>
+              <td class="text-center">{{ course.duracion }}</td>
+              <td class="text-center">{{ course.cupos - course.inscritos }} / {{ course.cupos }}</td>
+              <td class="text-center">
                 <input type="checkbox" :checked="course.estado" @change="toggleCourseStatus(course)" class="toggle toggle-success" />
               </td>
-              <td>
-                <div class="flex gap-2">
-                  <button @click="editCourse(course.id)" class="btn btn-sm btn-primary hover:scale-105 transition-all duration-200">Editar</button>
-                  <button @click="openDeleteModal(course)" class="btn btn-sm btn-secondary hover:scale-105 transition-all duration-200">Eliminar</button>
+              <td class="text-center">
+                <div class="flex gap-4 justify-center">
+                  <button @click="editCourse(course.id)" class="btn btn-sm btn-primary hover:scale-105 hover:shadow-md transition-all duration-200">Editar</button>
+                  <button @click="openDeleteModal(course)" class="btn btn-sm btn-secondary hover:scale-105 hover:shadow-md transition-all duration-200">Eliminar</button>
                 </div>
               </td>
             </tr>
@@ -183,7 +183,7 @@ async function toggleCourseStatus(course) {
           </div>
           <div class="modal-action mt-6">
             <button type="button" @click="showAddModal = false" class="btn">Cancelar</button>
-            <button type="submit" class="btn btn-primary hover:scale-105 transition-all duration-200">Agregar Curso</button>
+            <button type="submit" class="btn btn-primary hover:scale-105 hover:shadow-lg transition-all duration-200">Agregar Curso</button>
           </div>
         </form>
       </div>
@@ -195,7 +195,7 @@ async function toggleCourseStatus(course) {
         <p class="py-4">¿Estás seguro de que deseas eliminar el curso "{{ courseToDelete?.nombre }}"?</p>
         <div class="modal-action">
           <button @click="showDeleteModal = false" class="btn">Cancelar</button>
-          <button @click="confirmDeleteCourse()" class="btn btn-secondary hover:scale-105 transition-all duration-200">Sí, borrar</button>
+          <button @click="confirmDeleteCourse()" class="btn btn-secondary hover:scale-105 hover:shadow-lg transition-all duration-200">Sí, borrar</button>
         </div>
       </div>
     </dialog>
