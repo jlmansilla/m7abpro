@@ -214,7 +214,7 @@ async function toggleCourseStatus(course) {
         <p class="text-sm text-base-content/70 mb-6 bg-warning/10 p-3 rounded-lg">⚠️ Esta acción no se puede deshacer.</p>
         <div class="modal-action mt-6 pt-4 border-t border-base-300">
           <button @click="showDeleteModal = false" class="btn btn-ghost w-32">Cancelar</button>
-          <button @click="confirmDeleteCourse()" class="btn btn-error w-32">Eliminar</button>
+          <button @click="confirmDeleteCourse()" class="btn btn-error w-32">Sí, borrar</button>
         </div>
       </div>
       <div class="modal-backdrop bg-black/50" @click="showDeleteModal = false"></div>
