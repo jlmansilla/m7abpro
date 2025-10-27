@@ -39,6 +39,9 @@ jobs:
       - name: Clear Firebase cache
         run: rm -rf .firebase
 
+      - name: Deploy Firestore rules
+        run: firebase deploy --only firestore:rules --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug --force
+      
       - name: Deploy to production
         run: firebase deploy --only hosting --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug --force
       
