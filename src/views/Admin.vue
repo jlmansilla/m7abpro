@@ -189,17 +189,18 @@ async function toggleCourseStatus(course) {
       </div>
     </dialog>
 
-    <div v-if="showDeleteModal" class="modal modal-open">
-      <div class="modal-box">
+    <div v-if="showDeleteModal" class="modal modal-open z-50">
+      <div class="modal-box bg-base-100 shadow-2xl max-w-md mx-auto">
         <h3 class="font-bold text-2xl mb-4 text-error">⚠️ Confirmar Eliminación</h3>
-        <p class="py-4 text-lg">¿Estás seguro de que deseas eliminar el curso <strong>"{{ courseToDelete?.nombre }}"</strong>?</p>
-        <p class="text-sm text-base-content/70 mb-6">Esta acción no se puede deshacer.</p>
-        <div class="modal-action gap-3">
-          <button @click="showDeleteModal = false" class="btn btn-ghost hover:scale-105 transition-all duration-200">Cancelar</button>
-          <button @click="confirmDeleteCourse()" class="btn btn-error hover:scale-105 hover:shadow-lg transition-all duration-200">Sí, Eliminar</button>
+        <div class="divider"></div>
+        <p class="py-4 text-lg">¿Estás seguro de que deseas eliminar el curso <strong class="text-error">"{{ courseToDelete?.nombre }}"</strong>?</p>
+        <p class="text-sm text-base-content/70 mb-6 bg-warning/10 p-3 rounded-lg">⚠️ Esta acción no se puede deshacer.</p>
+        <div class="modal-action mt-6 pt-4 border-t border-base-300">
+          <button @click="showDeleteModal = false" class="btn btn-ghost w-32">Cancelar</button>
+          <button @click="confirmDeleteCourse()" class="btn btn-error w-32">Eliminar</button>
         </div>
       </div>
-      <div class="modal-backdrop" @click="showDeleteModal = false"></div>
+      <div class="modal-backdrop bg-black/50" @click="showDeleteModal = false"></div>
     </div>
   </div>
 </template>
