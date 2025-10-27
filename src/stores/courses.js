@@ -17,8 +17,17 @@ export const useCoursesStore = defineStore('courses', () => {
 
   // Computed
   const activeCourses = computed(() => {
-    const filtered = courses.value.filter(c => c.estado === true)
+    const filtered = courses.value.filter(c => {
+      // Aceptar true (boolean) o "true" (string) como estado activo
+      return c.estado === true || c.estado === "true" || c.estado === 1 || c.estado === "1"
+    })
     console.log(`🔄 activeCourses computed: ${filtered.length} cursos activos de ${courses.value.length} totales`)
+    console.log(`📋 Cursos completos:`, courses.value.map(c => ({
+      nombre: c.nombre,
+      estado: c.estado,
+      tipoEstado: typeof c.estado,
+      codigo: c.codigo
+    })))
     return filtered
   })
 
