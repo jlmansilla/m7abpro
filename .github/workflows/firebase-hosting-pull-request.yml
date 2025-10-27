@@ -24,6 +24,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Clean dist directory
+        run: rm -rf dist
+
       - name: Check if secrets are available
         id: check-secrets
         run: |
@@ -37,14 +40,14 @@ jobs:
 
       - name: Build
         if: steps.check-secrets.outputs.secrets_available == 'true'
-        run: |
-          VITE_FIREBASE_API_KEY="${{ secrets.VITE_FIREBASE_API_KEY }}" \
-          VITE_FIREBASE_AUTH_DOMAIN="${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" \
-          VITE_FIREBASE_PROJECT_ID="${{ secrets.VITE_FIREBASE_PROJECT_ID }}" \
-          VITE_FIREBASE_APP_ID="${{ secrets.VITE_FIREBASE_APP_ID }}" \
-          VITE_FIREBASE_MESSAGING_SENDER_ID="${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}" \
-          VITE_FIREBASE_STORAGE_BUCKET="${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}" \
-          npm run build
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+        run: npm run build
 
       - name: Debug built API key
         if: steps.check-secrets.outputs.secrets_available == 'true'
@@ -68,9 +71,13 @@ jobs:
         if: steps.check-secrets.outputs.secrets_available == 'true'
         run: npm install -g firebase-tools
 
+      - name: Clear Firebase cache
+        if: steps.check-secrets.outputs.secrets_available == 'true'
+        run: rm -rf .firebase
+
       - name: Deploy to preview channel
         if: steps.check-secrets.outputs.secrets_available == 'true'
-        run: firebase deploy --only hosting,firestore:rules,firestore:indexes --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug
+        run: firebase deploy --only hosting,firestore:rules,firestore:indexes --project m7abpro --token "${{ secrets.FIREBASE_TOKEN }}" --debug --force
       
       - name: Verify deployment
         if: steps.check-secrets.outputs.secrets_available == 'true'
