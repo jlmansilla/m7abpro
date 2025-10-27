@@ -10,6 +10,9 @@ const coursesStore = useCoursesStore()
 const showAddModal = ref(false)
 const showDeleteModal = ref(false)
 const courseToDelete = ref(null)
+const showSuccessToast = ref(false)
+const showErrorToast = ref(false)
+const showDeleteSuccessToast = ref(false)
 
 const newCourse = ref({
   codigo: '',
@@ -60,9 +63,15 @@ async function confirmAddCourse() {
     }
     await coursesStore.addCourse(courseData)
     showAddModal.value = false
-    alert('Curso agregado exitosamente')
+    showSuccessToast.value = true
+    setTimeout(() => {
+      showSuccessToast.value = false
+    }, 3000)
   } catch (error) {
-    alert('Error al agregar el curso: ' + error.message)
+    showErrorToast.value = true
+    setTimeout(() => {
+      showErrorToast.value = false
+    }, 3000)
   }
 }
 
@@ -75,9 +84,15 @@ async function confirmDeleteCourse() {
   try {
     await coursesStore.deleteCourse(courseToDelete.value.id)
     showDeleteModal.value = false
-    alert('Curso eliminado exitosamente')
+    showDeleteSuccessToast.value = true
+    setTimeout(() => {
+      showDeleteSuccessToast.value = false
+    }, 3000)
   } catch (error) {
-    alert('Error al eliminar el curso: ' + error.message)
+    showErrorToast.value = true
+    setTimeout(() => {
+      showErrorToast.value = false
+    }, 3000)
   }
 }
 
@@ -147,47 +162,49 @@ async function toggleCourseStatus(course) {
       </div>
     </div>
 
-    <dialog :class="{ 'modal-open': showAddModal }" class="modal">
-      <div class="modal-box w-11/12 max-w-5xl">
-        <h3 class="font-bold text-lg mb-4">Agregar Nuevo Curso</h3>
+    <div v-if="showAddModal" class="modal modal-open z-50">
+      <div class="modal-box bg-base-100 shadow-2xl w-11/12 max-w-5xl mx-auto">
+        <h3 class="font-bold text-2xl mb-4 text-primary">➕ Agregar Nuevo Curso</h3>
+        <div class="divider"></div>
         <form @submit.prevent="confirmAddCourse">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="form-control">
-              <label class="label"><span class="label-text">Código</span></label>
-              <input v-model="newCourse.codigo" type="text" class="input input-bordered" required />
+              <label class="label"><span class="label-text font-semibold">Código</span></label>
+              <input v-model="newCourse.codigo" type="text" class="input input-bordered w-full" required />
             </div>
             <div class="form-control">
-              <label class="label"><span class="label-text">Nombre</span></label>
-              <input v-model="newCourse.nombre" type="text" class="input input-bordered" required />
+              <label class="label"><span class="label-text font-semibold">Nombre</span></label>
+              <input v-model="newCourse.nombre" type="text" class="input input-bordered w-full" required />
             </div>
             <div class="form-control">
-              <label class="label"><span class="label-text">Precio</span></label>
-              <input v-model="newCourse.precio" type="number" class="input input-bordered" required />
+              <label class="label"><span class="label-text font-semibold">Precio</span></label>
+              <input v-model="newCourse.precio" type="number" class="input input-bordered w-full" required />
             </div>
             <div class="form-control">
-              <label class="label"><span class="label-text">Duración</span></label>
-              <input v-model="newCourse.duracion" type="text" class="input input-bordered" required />
+              <label class="label"><span class="label-text font-semibold">Duración</span></label>
+              <input v-model="newCourse.duracion" type="text" class="input input-bordered w-full" required />
             </div>
             <div class="form-control md:col-span-2">
-              <label class="label"><span class="label-text">Descripción</span></label>
-              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered" required></textarea>
+              <label class="label"><span class="label-text font-semibold">Descripción</span></label>
+              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered w-full" rows="3" required></textarea>
             </div>
             <div class="form-control">
-              <label class="label"><span class="label-text">Cupos</span></label>
-              <input v-model="newCourse.cupos" type="number" class="input input-bordered" required />
+              <label class="label"><span class="label-text font-semibold">Cupos</span></label>
+              <input v-model="newCourse.cupos" type="number" class="input input-bordered w-full" required />
             </div>
             <div class="form-control md:col-span-2">
-              <label class="label"><span class="label-text">URL de Imagen</span></label>
-              <input v-model="newCourse.img" type="url" class="input input-bordered" required />
+              <label class="label"><span class="label-text font-semibold">URL de Imagen</span></label>
+              <input v-model="newCourse.img" type="url" class="input input-bordered w-full" required />
             </div>
           </div>
-          <div class="modal-action mt-6">
-            <button type="button" @click="showAddModal = false" class="btn">Cancelar</button>
-            <button type="submit" class="btn btn-primary hover:scale-105 hover:shadow-lg transition-all duration-200">Agregar Curso</button>
+          <div class="modal-action mt-6 pt-4 border-t border-base-300">
+            <button type="button" @click="showAddModal = false" class="btn btn-ghost w-32">Cancelar</button>
+            <button type="submit" class="btn btn-primary w-32">Agregar</button>
           </div>
         </form>
       </div>
-    </dialog>
+      <div class="modal-backdrop bg-black/50" @click="showAddModal = false"></div>
+    </div>
 
     <div v-if="showDeleteModal" class="modal modal-open z-50">
       <div class="modal-box bg-base-100 shadow-2xl max-w-md mx-auto">
@@ -201,6 +218,36 @@ async function toggleCourseStatus(course) {
         </div>
       </div>
       <div class="modal-backdrop bg-black/50" @click="showDeleteModal = false"></div>
+    </div>
+
+    <!-- Toast de éxito - Curso agregado -->
+    <div v-if="showSuccessToast" class="toast toast-top toast-end">
+      <div class="alert alert-success">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>¡Curso agregado exitosamente!</span>
+      </div>
+    </div>
+
+    <!-- Toast de éxito - Curso eliminado -->
+    <div v-if="showDeleteSuccessToast" class="toast toast-top toast-end">
+      <div class="alert alert-success">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>¡Curso eliminado exitosamente!</span>
+      </div>
+    </div>
+
+    <!-- Toast de error -->
+    <div v-if="showErrorToast" class="toast toast-top toast-end">
+      <div class="alert alert-error">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Error al procesar la operación</span>
+      </div>
     </div>
   </div>
 </template>

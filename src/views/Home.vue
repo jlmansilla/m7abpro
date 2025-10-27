@@ -54,19 +54,22 @@ onUnmounted(() => {
         </div>
 
         <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div v-for="course in coursesStore.activeCourses" :key="course.id" class="card bg-base-100 shadow-xl">
+          <div v-for="course in coursesStore.activeCourses" :key="course.id" class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
             <figure class="bg-base-200 flex items-center justify-center" style="height: 250px; overflow: hidden;">
               <img 
                 :src="course.img" 
-                :alt="course.nombre" 
-                style="max-width: 100%; max-height: 100%; object-fit: contain;"  
+                :alt="course.nombre"
+                class="w-full h-full object-cover"
               />
             </figure>
-            <div class="card-body">
-              <h2 class="card-title">{{ course.nombre }}</h2>
-              <p>{{ course.descripcion }}</p>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary" @click="enroll(course)">Inscribirse</button>
+            <div class="card-body text-center">
+              <h2 class="card-title justify-center font-bold text-xl uppercase tracking-wide">{{ course.nombre }}</h2>
+              <p class="text-base-content/80 font-medium">{{ course.descripcion }}</p>
+              <div class="badge badge-primary mb-2 badge-lg uppercase">{{ course.cupos - course.inscritos }} CUPOS DISPONIBLES</div>
+              <div class="card-actions justify-center">
+                <button class="btn btn-primary hover:scale-105 transition-all duration-200 font-semibold uppercase">
+                  INSCRIBIRSE
+                </button>
               </div>
             </div>
           </div>
