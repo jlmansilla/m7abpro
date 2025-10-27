@@ -180,7 +180,7 @@ firebase deploy --only firestore:rules
    - Activar/desactivar cursos
    - Eliminar cursos (con confirmación)
 
-## 🔑 Credenciales de Prueba
+## 🔑 Credenciales de Prueba App
 
 Para facilitar las pruebas de la aplicación, se han creado los siguientes usuarios:
 
