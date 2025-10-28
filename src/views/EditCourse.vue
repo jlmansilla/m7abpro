@@ -50,49 +50,49 @@ async function confirmUpdateCourse() {
 <template>
   <div class="min-h-screen bg-base-300">
     <NavBar />
-    <div class="container mx-auto p-4 pt-24">
-      <h1 class="text-3xl font-bold mb-8 text-center">Editar Curso</h1>
+    <div class="container mx-auto px-2 md:px-4 pt-20 md:pt-24 pb-4">
+      <h1 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Editar Curso</h1>
       
-      <div v-if="course" class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-2xl border-2 border-gray-300">
-        <form @submit.prevent="showUpdateConfirmModal = true">
-          <div class="form-control w-full mb-4 md:flex md:items-center md:justify-between">
-            <label class="label pb-2 md:pb-0 md:w-1/4"><span class="label-text font-semibold">Código</span></label>
-            <input v-model="course.codigo" type="text" class="input input-bordered md:w-3/4" />
+      <div v-if="course" class="max-w-2xl mx-auto bg-white p-4 md:p-8 rounded-lg shadow-2xl border-2 border-gray-300">
+        <form @submit.prevent="showUpdateConfirmModal = true" class="space-y-4">
+          <div class="form-control w-full">
+            <label class="label"><span class="label-text font-semibold text-sm md:text-base">Código</span></label>
+            <input v-model="course.codigo" type="text" class="input input-bordered w-full input-sm md:input-md" />
           </div>
 
-          <div class="form-control w-full mb-4 md:flex md:items-center md:justify-between">
-            <label class="label pb-2 md:pb-0 md:w-1/4"><span class="label-text font-semibold">Nombre</span></label>
-            <input v-model="course.nombre" type="text" class="input input-bordered md:w-3/4" />
+          <div class="form-control w-full">
+            <label class="label"><span class="label-text font-semibold text-sm md:text-base">Nombre</span></label>
+            <input v-model="course.nombre" type="text" class="input input-bordered w-full input-sm md:input-md" />
           </div>
 
-          <div class="form-control w-full mb-4 md:flex md:items-center md:justify-between">
-            <label class="label pb-2 md:pb-0 md:w-1/4"><span class="label-text font-semibold">Precio</span></label>
-            <input v-model="course.precio" type="number" class="input input-bordered md:w-3/4" />
+          <div class="form-control w-full">
+            <label class="label"><span class="label-text font-semibold text-sm md:text-base">Precio</span></label>
+            <input v-model="course.precio" type="number" class="input input-bordered w-full input-sm md:input-md" />
           </div>
 
-          <div class="form-control w-full mb-4 md:flex md:items-center md:justify-between">
-            <label class="label pb-2 md:pb-0 md:w-1/4"><span class="label-text font-semibold">Duración</span></label>
-            <input v-model="course.duracion" type="text" class="input input-bordered md:w-3/4" />
+          <div class="form-control w-full">
+            <label class="label"><span class="label-text font-semibold text-sm md:text-base">Duración</span></label>
+            <input v-model="course.duracion" type="text" class="input input-bordered w-full input-sm md:input-md" />
           </div>
 
-          <div class="form-control w-full mb-4 md:flex md:items-center md:justify-between">
-            <label class="label pb-2 md:pb-0 md:w-1/4"><span class="label-text font-semibold">Descripción</span></label>
-            <textarea v-model="course.descripcion" class="textarea textarea-bordered md:w-3/4" rows="4"></textarea>
+          <div class="form-control w-full">
+            <label class="label"><span class="label-text font-semibold text-sm md:text-base">Descripción</span></label>
+            <textarea v-model="course.descripcion" class="textarea textarea-bordered w-full textarea-sm md:textarea-md" rows="4"></textarea>
           </div>
 
-          <div class="form-control w-full mb-4 md:flex md:items-center md:justify-between">
-            <label class="label pb-2 md:pb-0 md:w-1/4"><span class="label-text font-semibold">Cupos</span></label>
-            <input v-model="course.cupos" type="number" class="input input-bordered md:w-3/4" />
+          <div class="form-control w-full">
+            <label class="label"><span class="label-text font-semibold text-sm md:text-base">Cupos</span></label>
+            <input v-model="course.cupos" type="number" class="input input-bordered w-full input-sm md:input-md" />
           </div>
 
-          <div class="form-control w-full mb-4 md:flex md:items-center md:gap-4">
-            <label class="label pb-2 md:pb-0 md:w-1/4 md:flex-shrink-0"><span class="label-text font-semibold">URL de Imagen</span></label>
-            <input v-model="course.img" type="url" class="input input-bordered md:w-3/4 md:flex-1" placeholder="Ingresa la URL" style="max-width: 100%;" />
+          <div class="form-control w-full">
+            <label class="label"><span class="label-text font-semibold text-sm md:text-base">URL de Imagen</span></label>
+            <input v-model="course.img" type="url" class="input input-bordered w-full input-sm md:input-md" placeholder="Ingresa la URL" />
           </div>
 
-          <div class="flex justify-center gap-4 mt-8 pt-6 border-t border-gray-300">
-            <button type="button" @click="router.push('/admin')" class="btn btn-ghost">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Actualizar Curso</button>
+          <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6 md:mt-8 pt-6 border-t border-gray-300">
+            <button type="button" @click="router.push('/admin')" class="btn btn-ghost w-full sm:w-auto flex-1">Cancelar</button>
+            <button type="submit" class="btn btn-primary w-full sm:w-auto flex-1">Actualizar Curso</button>
           </div>
         </form>
       </div>
@@ -103,13 +103,13 @@ async function confirmUpdateCourse() {
     </div>
 
     <div v-if="showUpdateConfirmModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div class="bg-white rounded-lg shadow-2xl border-4 border-blue-600 max-w-md w-full p-6">
-        <h3 class="font-bold text-xl mb-3 text-blue-600">✨ Confirmar Actualización</h3>
+      <div class="bg-white rounded-lg shadow-2xl border-2 md:border-4 border-blue-600 max-w-md w-full p-4 md:p-6">
+        <h3 class="font-bold text-lg md:text-xl mb-3 text-blue-600">✨ Confirmar Actualización</h3>
         <div class="divider my-3"></div>
-        <p class="py-2 text-base">¿Estás seguro de que deseas guardar los cambios en este curso?</p>
-        <div class="mt-4 pt-4 border-t border-gray-300 flex justify-evenly">
-          <button @click="showUpdateConfirmModal = false" class="btn btn-ghost btn-sm">Cancelar</button>
-          <button @click="confirmUpdateCourse()" class="btn btn-primary btn-sm">Sí, actualizar</button>
+        <p class="py-2 text-sm md:text-base">¿Estás seguro de que deseas guardar los cambios en este curso?</p>
+        <div class="mt-4 pt-4 border-t border-gray-300 flex justify-evenly gap-2">
+          <button @click="showUpdateConfirmModal = false" class="btn btn-ghost btn-sm flex-1">Cancelar</button>
+          <button @click="confirmUpdateCourse()" class="btn btn-primary btn-sm flex-1">Sí, actualizar</button>
         </div>
       </div>
       <div class="absolute inset-0 bg-gray-800/80 -z-10" @click="showUpdateConfirmModal = false"></div>

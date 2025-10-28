@@ -40,34 +40,34 @@ onUnmounted(() => {
     
     <!-- Contenedor principal con espacio fijo -->
     <main class="main-content">
-      <div class="container mx-auto px-4">
-        <div class="mb-8">
-          <h1 class="text-3xl font-bold">Cursos Disponibles</h1>
+      <div class="container mx-auto px-4 py-4 md:py-6">
+        <div class="mb-6 md:mb-8">
+          <h1 class="text-2xl md:text-3xl font-bold text-center md:text-left">Cursos Disponibles</h1>
         </div>
 
         <div v-if="coursesStore.loading" class="text-center py-8">
           <span class="loading loading-spinner loading-lg"></span>
         </div>
 
-        <div v-else-if="coursesStore.activeCourses.length === 0" class="text-center">
-          <p>No hay cursos disponibles</p>
+        <div v-else-if="coursesStore.activeCourses.length === 0" class="text-center py-8">
+          <p class="text-lg">No hay cursos disponibles</p>
         </div>
 
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <div v-for="course in coursesStore.activeCourses" :key="course.id" class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-            <figure class="bg-base-200 flex items-center justify-center" style="height: 250px; overflow: hidden;">
+            <figure class="bg-base-200 flex items-center justify-center" style="height: 200px; overflow: hidden;">
               <img 
                 :src="course.img" 
                 :alt="course.nombre"
                 class="w-full h-full object-cover"
               />
             </figure>
-            <div class="card-body text-center">
-              <h2 class="card-title justify-center font-bold text-xl uppercase tracking-wide">{{ course.nombre }}</h2>
-              <p class="text-base-content/80 font-medium">{{ course.descripcion }}</p>
-              <div class="badge badge-primary mb-2 badge-lg uppercase">{{ course.cupos - course.inscritos }} CUPOS DISPONIBLES</div>
+            <div class="card-body text-center p-4">
+              <h2 class="card-title justify-center font-bold text-base md:text-xl uppercase tracking-wide line-clamp-2">{{ course.nombre }}</h2>
+              <p class="text-sm md:text-base text-base-content/80 font-medium line-clamp-2">{{ course.descripcion }}</p>
+              <div class="badge badge-primary badge-sm md:badge-lg uppercase">{{ course.cupos - course.inscritos }} CUPOS</div>
               <div class="card-actions justify-center">
-                <button class="btn btn-primary hover:scale-105 transition-all duration-200 font-semibold uppercase">
+                <button class="btn btn-primary btn-sm md:btn-md hover:scale-105 transition-all duration-200 font-semibold uppercase">
                   INSCRIBIRSE
                 </button>
               </div>
@@ -78,11 +78,11 @@ onUnmounted(() => {
     </main>
 
     <div v-if="authStore.showWelcomeModal" class="modal modal-open">
-      <div class="modal-box">
-        <h3 class="font-bold text-lg">¡Bienvenido!</h3>
-        <p class="py-4">Has ingresado correctamente.</p>
+      <div class="modal-box max-w-sm md:max-w-md">
+        <h3 class="font-bold text-lg md:text-xl">¡Bienvenido!</h3>
+        <p class="py-4 text-sm md:text-base">Has ingresado correctamente.</p>
         <div class="modal-action">
-          <button @click="closeWelcomeModal" class="btn btn-primary">Continuar</button>
+          <button @click="closeWelcomeModal" class="btn btn-primary w-full sm:w-auto">Continuar</button>
         </div>
       </div>
     </div>
@@ -97,9 +97,16 @@ onUnmounted(() => {
 }
 
 .main-content {
-  padding-top: 100px; /* Espacio fijo desde la parte superior */
+  padding-top: 80px; /* Espacio reducido para móviles */
   padding-bottom: 2rem;
-  min-height: calc(100vh - 100px);
+  min-height: calc(100vh - 80px);
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding-top: 100px; /* Espacio completo para desktop */
+    min-height: calc(100vh - 100px);
+  }
 }
 
 /* Asegurar que el navbar tenga altura consistente */

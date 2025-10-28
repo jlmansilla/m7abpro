@@ -26,10 +26,10 @@ async function onSubmit() {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-base-200">
-    <div class="card w-96 bg-base-100 shadow-xl">
+  <div class="min-h-screen flex items-center justify-center bg-base-200 px-4 py-8">
+    <div class="card w-full max-w-md bg-base-100 shadow-xl">
       <div class="card-body">
-        <h2 class="card-title text-3xl mb-4 justify-center">Crear Cuenta</h2>
+        <h2 class="card-title text-2xl md:text-3xl mb-4 justify-center">Crear Cuenta</h2>
         
         <form @submit.prevent="onSubmit">
           <div class="form-control w-full mb-4">
@@ -57,7 +57,7 @@ async function onSubmit() {
         </div>
 
         <div class="text-center mt-4">
-          <p>
+          <p class="text-sm">
             ¿Ya tienes cuenta? 
             <router-link :to="{ name:'login' }" class="link link-primary">
               Iniciar sesión
