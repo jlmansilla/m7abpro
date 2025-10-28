@@ -153,7 +153,12 @@ async function toggleCourseStatus(course) {
               <td class="text-center">
                 <div class="avatar mx-auto">
                   <div class="w-16 rounded">
-                    <img :src="course.img" :alt="`Imagen del curso ${course.nombre}`" loading="lazy" />
+                    <img 
+                      :src="course.img" 
+                      :alt="`Imagen del curso ${course.nombre}`" 
+                      loading="lazy"
+                      class="object-cover object-center"  <!-- Agrega estas clases -->
+                    />
                   </div>
                 </div>
               </td>
@@ -201,7 +206,12 @@ async function toggleCourseStatus(course) {
             <div class="flex items-center gap-4 mb-4">
               <div class="avatar">
                 <div class="w-20 rounded">
-                  <img :src="course.img" :alt="`Imagen de ${course.nombre}`" loading="lazy" />
+                  <img 
+                    :src="course.img" 
+                    :alt="`Imagen de ${course.nombre}`" 
+                    loading="lazy"
+                    class="object-cover object-center"  <!-- Agrega estas clases -->
+                  />
                 </div>
               </div>
               <div class="flex-1">
