@@ -124,30 +124,36 @@ async function toggleCourseStatus(course) {
     <div class="container mx-auto px-2 md:px-4 pt-20 md:pt-24 pb-4">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-4">
         <h1 class="text-2xl md:text-3xl font-bold">Administración de Cursos</h1>
-        <button @click="openAddModal" class="btn btn-primary btn-sm md:btn-md w-full sm:w-auto hover:scale-105 hover:shadow-lg transition-all duration-200 font-semibold">+ Agregar Curso</button>
+        <button @click="openAddModal" 
+                class="btn btn-primary btn-sm md:btn-md w-full sm:w-auto hover:scale-105 hover:shadow-lg transition-all duration-200 font-semibold"
+                aria-label="Agregar un nuevo curso">
+          + Agregar Curso
+        </button>
       </div>
 
       <!-- Desktop Table -->
-      <div class="hidden lg:block overflow-x-auto bg-base-100 rounded-lg shadow">
-        <table class="table table-zebra w-full">
+      <div class="hidden lg:block overflow-x-auto bg-base-100 rounded-lg shadow" 
+           role="region" 
+           aria-label="Tabla de cursos">
+        <table class="table table-zebra w-full" role="table">
           <thead>
-            <tr>
-              <th>Imagen</th>
-              <th>Código</th>
-              <th>Nombre</th>
-              <th>Precio</th>
-              <th>Duración</th>
-              <th>Cupos</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+            <tr role="row">
+              <th role="columnheader">Imagen</th>
+              <th role="columnheader">Código</th>
+              <th role="columnheader">Nombre</th>
+              <th role="columnheader">Precio</th>
+              <th role="columnheader">Duración</th>
+              <th role="columnheader">Cupos</th>
+              <th role="columnheader">Estado</th>
+              <th role="columnheader">Acciones</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="course in coursesStore.courses" :key="course.id">
+          <tbody role="rowgroup">
+            <tr v-for="course in coursesStore.courses" :key="course.id" role="row">
               <td class="text-center">
                 <div class="avatar mx-auto">
                   <div class="w-16 rounded">
-                    <img :src="course.img" :alt="course.nombre" />
+                    <img :src="course.img" :alt="`Imagen del curso ${course.nombre}`" loading="lazy" />
                   </div>
                 </div>
               </td>
@@ -157,12 +163,26 @@ async function toggleCourseStatus(course) {
               <td class="text-center">{{ course.duracion }}</td>
               <td class="text-center">{{ course.cupos - course.inscritos }} / {{ course.cupos }}</td>
               <td class="text-center">
-                <input type="checkbox" :checked="course.estado" @change="toggleCourseStatus(course)" class="toggle toggle-success" />
+                <input type="checkbox" 
+                       :checked="course.estado" 
+                       @change="toggleCourseStatus(course)" 
+                       class="toggle toggle-success"
+                       :aria-label="`${course.estado ? 'Desactivar' : 'Activar'} curso ${course.nombre}`"
+                       :aria-checked="course.estado"
+                       role="switch" />
               </td>
               <td class="text-center">
                 <div class="flex gap-2 justify-center">
-                  <button @click="editCourse(course.id)" class="btn btn-xs btn-primary hover:scale-105 hover:shadow-md transition-all duration-200">Editar</button>
-                  <button @click="openDeleteModal(course)" class="btn btn-xs btn-error hover:scale-105 hover:shadow-md transition-all duration-200">Eliminar</button>
+                  <button @click="editCourse(course.id)" 
+                          class="btn btn-xs btn-primary hover:scale-105 hover:shadow-md transition-all duration-200"
+                          :aria-label="`Editar curso ${course.nombre}`">
+                    Editar
+                  </button>
+                  <button @click="openDeleteModal(course)" 
+                          class="btn btn-xs btn-error hover:scale-105 hover:shadow-md transition-all duration-200"
+                          :aria-label="`Eliminar curso ${course.nombre}`">
+                    Eliminar
+                  </button>
                 </div>
               </td>
             </tr>
@@ -171,17 +191,21 @@ async function toggleCourseStatus(course) {
       </div>
 
       <!-- Mobile Cards -->
-      <div class="lg:hidden space-y-4">
-        <div v-for="course in coursesStore.courses" :key="course.id" class="card bg-base-100 shadow-xl">
+      <div class="lg:hidden space-y-4" role="list" aria-label="Lista de cursos para administrar">
+        <article v-for="course in coursesStore.courses" 
+                 :key="course.id" 
+                 class="card bg-base-100 shadow-xl"
+                 role="listitem"
+                 :aria-labelledby="`mobile-course-${course.id}`">
           <div class="card-body p-4">
             <div class="flex items-center gap-4 mb-4">
               <div class="avatar">
                 <div class="w-20 rounded">
-                  <img :src="course.img" :alt="course.nombre" />
+                  <img :src="course.img" :alt="`Imagen de ${course.nombre}`" loading="lazy" />
                 </div>
               </div>
               <div class="flex-1">
-                <h2 class="card-title text-sm">{{ course.nombre }}</h2>
+                <h2 :id="`mobile-course-${course.id}`" class="card-title text-sm">{{ course.nombre }}</h2>
                 <p class="text-xs text-base-content/70">Código: {{ course.codigo }}</p>
               </div>
             </div>
@@ -200,23 +224,43 @@ async function toggleCourseStatus(course) {
               </div>
               <div>
                 <span class="font-semibold">Estado:</span>
-                <input type="checkbox" :checked="course.estado" @change="toggleCourseStatus(course)" class="toggle toggle-success toggle-sm ml-2" />
+                <input type="checkbox" 
+                       :checked="course.estado" 
+                       @change="toggleCourseStatus(course)" 
+                       class="toggle toggle-success toggle-sm ml-2"
+                       :aria-label="`${course.estado ? 'Desactivar' : 'Activar'} curso ${course.nombre}`"
+                       :aria-checked="course.estado"
+                       role="switch" />
               </div>
             </div>
             <div class="card-actions justify-end gap-2 mt-4">
-              <button @click="editCourse(course.id)" class="btn btn-sm btn-primary flex-1">Editar</button>
-              <button @click="openDeleteModal(course)" class="btn btn-sm btn-error flex-1">Eliminar</button>
+              <button @click="editCourse(course.id)" 
+                      class="btn btn-sm btn-primary flex-1"
+                      :aria-label="`Editar curso ${course.nombre}`">
+                Editar
+              </button>
+              <button @click="openDeleteModal(course)" 
+                      class="btn btn-sm btn-error flex-1"
+                      :aria-label="`Eliminar curso ${course.nombre}`">
+                Eliminar
+              </button>
             </div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
 
-    <div v-if="showAddModal" class="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4">
+    <div v-if="showAddModal" 
+         role="dialog" 
+         aria-labelledby="add-modal-title" 
+         aria-describedby="add-modal-description"
+         aria-modal="true"
+         class="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4">
       <div class="bg-white rounded-lg shadow-2xl border-2 md:border-4 border-blue-600 w-full max-w-5xl max-h-[95vh] md:max-h-[90vh] overflow-y-auto p-4 md:p-6">
-        <h3 class="font-bold text-xl md:text-2xl mb-4 text-primary">➕ Agregar Nuevo Curso</h3>
+        <h3 id="add-modal-title" class="font-bold text-xl md:text-2xl mb-4 text-primary">➕ Agregar Nuevo Curso</h3>
+        <p id="add-modal-description" class="sr-only">Complete el formulario para agregar un nuevo curso</p>
         <div class="divider"></div>
-        <form @submit.prevent="confirmAddCourse">
+        <form @submit.prevent="confirmAddCourse" role="form">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-sm md:text-base">Código</span></label>
@@ -248,32 +292,72 @@ async function toggleCourseStatus(course) {
             </div>
           </div>
           <div class="modal-action mt-4 md:mt-6 pt-4 border-t border-base-300 flex-col sm:flex-row gap-2">
-            <button type="button" @click="showAddModal = false" class="btn btn-ghost w-full sm:w-auto sm:flex-1">Cancelar</button>
-            <button type="submit" class="btn btn-primary w-full sm:w-auto sm:flex-1">Agregar</button>
+            <button type="button" 
+                    @click="showAddModal = false" 
+                    class="btn btn-ghost w-full sm:w-auto sm:flex-1"
+                    aria-label="Cancelar y cerrar modal">
+              Cancelar
+            </button>
+            <button type="submit" 
+                    class="btn btn-primary w-full sm:w-auto sm:flex-1"
+                    aria-label="Agregar curso">
+              Agregar
+            </button>
           </div>
         </form>
       </div>
-      <div class="absolute inset-0 bg-gray-800/80 -z-10" @click="showAddModal = false"></div>
+      <div class="absolute inset-0 bg-gray-800/80 -z-10" 
+           @click="showAddModal = false"
+           aria-label="Cerrar modal"
+           role="button"
+           tabindex="0"
+           @keydown.enter="showAddModal = false"
+           @keydown.escape="showAddModal = false"></div>
     </div>
 
-    <div v-if="showDeleteModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div v-if="showDeleteModal" 
+         role="dialog" 
+         aria-labelledby="delete-modal-title" 
+         aria-describedby="delete-modal-description"
+         aria-modal="true"
+         class="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div class="bg-white rounded-lg shadow-2xl border-2 md:border-4 border-red-600 max-w-sm w-full p-4 md:p-6">
-        <h3 class="font-bold text-lg md:text-xl mb-3 text-error">⚠️ Confirmar Eliminación</h3>
+        <h3 id="delete-modal-title" class="font-bold text-lg md:text-xl mb-3 text-error">⚠️ Confirmar Eliminación</h3>
         <div class="divider my-3"></div>
-        <p class="py-2 text-sm md:text-base">¿Estás seguro de que deseas eliminar el curso <strong class="text-error">"{{ courseToDelete?.nombre }}"</strong>?</p>
-        <p class="text-xs text-base-content/70 mb-4 bg-warning/10 p-2 rounded-lg">⚠️ Esta acción no se puede deshacer.</p>
+        <p id="delete-modal-description" class="py-2 text-sm md:text-base">
+          ¿Estás seguro de que deseas eliminar el curso <strong class="text-error">"{{ courseToDelete?.nombre }}"</strong>?
+        </p>
+        <p class="text-xs text-base-content/70 mb-4 bg-warning/10 p-2 rounded-lg" role="alert">⚠️ Esta acción no se puede deshacer.</p>
         <div class="mt-3 pt-3 border-t border-base-300 flex justify-evenly gap-2">
-          <button @click="showDeleteModal = false" class="btn btn-ghost btn-sm flex-1">Cancelar</button>
-          <button @click="confirmDeleteCourse()" class="btn btn-error btn-sm flex-1">Sí, borrar</button>
+          <button @click="showDeleteModal = false" 
+                  class="btn btn-ghost btn-sm flex-1"
+                  aria-label="Cancelar eliminación">
+            Cancelar
+          </button>
+          <button @click="confirmDeleteCourse()" 
+                  class="btn btn-error btn-sm flex-1"
+                  aria-label="Confirmar y eliminar curso">
+            Sí, borrar
+          </button>
         </div>
       </div>
-      <div class="absolute inset-0 bg-gray-800/80 -z-10" @click="showDeleteModal = false"></div>
+      <div class="absolute inset-0 bg-gray-800/80 -z-10" 
+           @click="showDeleteModal = false"
+           aria-label="Cerrar modal"
+           role="button"
+           tabindex="0"
+           @keydown.enter="showDeleteModal = false"
+           @keydown.escape="showDeleteModal = false"></div>
     </div>
 
     <!-- Toast de éxito - Curso agregado -->
-    <div v-if="showSuccessToast" class="toast toast-top toast-end">
+    <div v-if="showSuccessToast" 
+         role="alert" 
+         aria-live="polite" 
+         aria-atomic="true"
+         class="toast toast-top toast-end">
       <div class="alert alert-success">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span>¡Curso agregado exitosamente!</span>
@@ -281,9 +365,13 @@ async function toggleCourseStatus(course) {
     </div>
 
     <!-- Toast de éxito - Curso eliminado -->
-    <div v-if="showDeleteSuccessToast" class="toast toast-top toast-end">
+    <div v-if="showDeleteSuccessToast" 
+         role="alert" 
+         aria-live="polite" 
+         aria-atomic="true"
+         class="toast toast-top toast-end">
       <div class="alert alert-success">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span>¡Curso eliminado exitosamente!</span>
@@ -291,9 +379,13 @@ async function toggleCourseStatus(course) {
     </div>
 
     <!-- Toast de error -->
-    <div v-if="showErrorToast" class="toast toast-top toast-end">
+    <div v-if="showErrorToast" 
+         role="alert" 
+         aria-live="assertive" 
+         aria-atomic="true"
+         class="toast toast-top toast-end">
       <div class="alert alert-error">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <span>Error al procesar la operación</span>
