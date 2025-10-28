@@ -157,7 +157,7 @@ async function toggleCourseStatus(course) {
                       :src="course.img" 
                       :alt="`Imagen del curso ${course.nombre}`" 
                       loading="lazy"
-                      class="object-cover object-center"  <!-- Agrega estas clases -->
+                      class="object-cover object-center"
                     />
                   </div>
                 </div>
@@ -210,7 +210,7 @@ async function toggleCourseStatus(course) {
                     :src="course.img" 
                     :alt="`Imagen de ${course.nombre}`" 
                     loading="lazy"
-                    class="object-cover object-center"  <!-- Agrega estas clases -->
+                    class="object-cover object-center"
                   />
                 </div>
               </div>
