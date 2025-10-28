@@ -39,7 +39,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav role="navigation" aria-label="Navegación principal" class="bg-blue-700 text-white shadow-lg fixed top-0 left-0 right-0 z-50 w-full h-16 border-b-2 border-blue-600">
+  <nav role="banner" aria-label="Navegación principal" class="bg-blue-700 text-white shadow-lg fixed top-0 left-0 right-0 z-50 w-full h-16 border-b-2 border-blue-600">
     <div class="flex items-center justify-between w-full h-full px-4 md:px-8">
       <!-- Logo - izquierda -->
       <div class="flex items-center">

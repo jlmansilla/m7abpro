@@ -50,7 +50,7 @@ async function confirmUpdateCourse() {
 <template>
   <div class="min-h-screen bg-base-300">
     <NavBar />
-    <div class="container mx-auto px-2 md:px-4 pt-20 md:pt-24 pb-4">
+    <main role="main" aria-label="Editar curso" class="container mx-auto px-2 md:px-4 pt-20 md:pt-24 pb-4">
       <h1 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-center">Editar Curso</h1>
       
       <div v-if="course" class="max-w-2xl mx-auto bg-white p-4 md:p-8 rounded-lg shadow-2xl border-2 border-gray-300">
@@ -112,7 +112,7 @@ async function confirmUpdateCourse() {
       <div v-else class="alert alert-warning">
         <span>Cargando información del curso...</span>
       </div>
-    </div>
+    </main>
 
     <div v-if="showUpdateConfirmModal" 
          role="dialog" 

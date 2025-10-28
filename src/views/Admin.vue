@@ -121,7 +121,7 @@ async function toggleCourseStatus(course) {
   <div class="min-h-screen bg-base-200">
     <NavBar />
     
-    <div class="container mx-auto px-2 md:px-4 pt-20 md:pt-24 pb-4">
+    <main role="main" aria-label="Administración de cursos" class="container mx-auto px-2 md:px-4 pt-20 md:pt-24 pb-4">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 md:mb-6 gap-4">
         <h1 class="text-2xl md:text-3xl font-bold">Administración de Cursos</h1>
         <button @click="openAddModal" 
@@ -248,7 +248,7 @@ async function toggleCourseStatus(course) {
           </div>
         </article>
       </div>
-    </div>
+    </main>
 
     <div v-if="showAddModal" 
          role="dialog" 
