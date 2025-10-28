@@ -69,7 +69,7 @@ onUnmounted(() => {
                    :key="course.id" 
                    class="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
                    role="article"
-                   aria-labelledby="course-title-{{ course.id }}">
+                   :aria-labelledby="`course-title-${course.id}`">
             <figure class="bg-base-200 flex items-center justify-center" style="height: 200px; overflow: hidden;">
               <img 
                 :src="course.img" 
