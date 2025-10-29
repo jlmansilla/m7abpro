@@ -150,8 +150,8 @@ async function toggleCourseStatus(course) {
           </thead>
           <tbody role="rowgroup">
             <tr v-for="course in coursesStore.courses" :key="course.id" role="row">
-              <td class="text-center">
-                <div class="avatar mx-auto">
+              <td class="text-center align-middle">
+                <div class="avatar mx-auto flex items-center justify-center">
                   <div class="w-16 h-16 rounded">
                     <img 
                       :src="course.img" 
