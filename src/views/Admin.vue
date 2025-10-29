@@ -152,12 +152,12 @@ async function toggleCourseStatus(course) {
             <tr v-for="course in coursesStore.courses" :key="course.id" role="row">
               <td class="text-center">
                 <div class="avatar mx-auto">
-                  <div class="w-16 rounded">
+                  <div class="w-16 h-16 rounded">
                     <img 
                       :src="course.img" 
                       :alt="`Imagen del curso ${course.nombre}`" 
                       loading="lazy"
-                      class="object-cover object-center"
+                      class="w-full h-full object-cover object-center"
                     />
                   </div>
                 </div>
