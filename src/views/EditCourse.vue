@@ -17,18 +17,40 @@ const showErrorToast = ref(false)
 let unsubscribe = null
 
 function loadCourse() {
-  const foundCourse = coursesStore.courses.find(c => c.id === courseId)
-  if (foundCourse) {
-    course.value = { ...foundCourse }
-  } else if (coursesStore.courses.length > 0) {
-    // Si hay cursos cargados pero no se encontró el que buscamos, redirigir
-    router.push('/admin')
+  try {
+    if (!coursesStore || !coursesStore.courses) {
+      return
+    }
+    
+    const foundCourse = coursesStore.courses.find(c => c.id === courseId)
+    if (foundCourse) {
+      course.value = { ...foundCourse }
+    } else if (coursesStore.courses.length > 0) {
+      // Si hay cursos cargados pero no se encontró el que buscamos, redirigir
+      router.push('/admin')
+    }
+  } catch (err) {
+    console.error('Error al cargar curso:', err)
   }
 }
 
 onMounted(() => {
-  unsubscribe = coursesStore.subscribeToCourses()
-  loadCourse()
+  try {
+    unsubscribe = coursesStore.subscribeToCourses()
+    
+    // Intentar cargar el curso inmediatamente
+    loadCourse()
+    
+    // También intentar cargar después de un pequeño delay
+    setTimeout(() => {
+      if (!course.value && coursesStore.courses.length > 0) {
+        loadCourse()
+      }
+    }, 100)
+  } catch (err) {
+    console.error('Error en onMounted de EditCourse:', err)
+    router.push('/admin')
+  }
 })
 
 // Observar cambios en los cursos para cargar el curso cuando esté disponible
@@ -45,6 +67,11 @@ onUnmounted(() => {
 })
 
 async function confirmUpdateCourse() {
+  if (!course.value) {
+    console.error('No hay curso para actualizar')
+    return
+  }
+  
   try {
     const courseData = {
       ...course.value,
@@ -58,7 +85,8 @@ async function confirmUpdateCourse() {
       showSuccessToast.value = false
       router.push('/admin')
     }, 2000)
-  } catch (error) {
+  } catch (err) {
+    console.error('Error al actualizar curso:', err)
     showUpdateConfirmModal.value = false
     showErrorToast.value = true
     setTimeout(() => {

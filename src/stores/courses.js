@@ -14,6 +14,8 @@ export const useCoursesStore = defineStore('courses', () => {
   const courses = ref([])
   const loading = ref(false)
   const error = ref(null)
+  let unsubscribeFunction = null
+  let isSubscribed = false
 
   // Computed
   const activeCourses = computed(() => {
@@ -33,8 +35,14 @@ export const useCoursesStore = defineStore('courses', () => {
 
   // Suscribirse a cambios en tiempo real con onSnapshot
   function subscribeToCourses() {
+    // Si ya hay una suscripción activa, retornar una función vacía
+    if (isSubscribed && unsubscribeFunction) {
+      return unsubscribeFunction
+    }
+    
     try {
       loading.value = true
+      isSubscribed = true
       const unsubscribe = onSnapshot(
         collection(db, 'cursos'),
         (snapshot) => {
@@ -66,13 +74,22 @@ export const useCoursesStore = defineStore('courses', () => {
           console.error('❌ Error en onSnapshot:', err)
           error.value = err.message
           loading.value = false
+          isSubscribed = false
         }
       )
-      return unsubscribe
+      
+      unsubscribeFunction = () => {
+        unsubscribe()
+        isSubscribed = false
+        unsubscribeFunction = null
+      }
+      
+      return unsubscribeFunction
     } catch (err) {
       console.error('❌ Error al suscribirse a cursos:', err)
       error.value = err.message
       loading.value = false
+      isSubscribed = false
       return () => {}
     }
   }
