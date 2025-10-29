@@ -280,42 +280,42 @@ async function toggleCourseStatus(course) {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-sm md:text-base">Código</span></label>
-              <input v-model="newCourse.codigo" type="text" class="input input-bordered w-full input-sm md:input-md" required />
+              <input v-model="newCourse.codigo" type="text" class="input input-bordered input-enhanced w-full input-sm md:input-md" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-sm md:text-base">Nombre</span></label>
-              <input v-model="newCourse.nombre" type="text" class="input input-bordered w-full input-sm md:input-md" required />
+              <input v-model="newCourse.nombre" type="text" class="input input-bordered input-enhanced w-full input-sm md:input-md" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-sm md:text-base">Precio</span></label>
-              <input v-model="newCourse.precio" type="number" class="input input-bordered w-full input-sm md:input-md" required />
+              <input v-model="newCourse.precio" type="number" min="0" step="any" class="input input-bordered input-enhanced w-full input-sm md:input-md" required />
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-sm md:text-base">Duración</span></label>
-              <input v-model="newCourse.duracion" type="text" class="input input-bordered w-full input-sm md:input-md" required />
+              <input v-model="newCourse.duracion" type="text" class="input input-bordered input-enhanced w-full input-sm md:input-md" required />
             </div>
             <div class="form-control md:col-span-2">
               <label class="label"><span class="label-text font-semibold text-sm md:text-base">Descripción</span></label>
-              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered w-full textarea-sm md:textarea-md" rows="3" required></textarea>
+              <textarea v-model="newCourse.descripcion" class="textarea textarea-bordered textarea-enhanced w-full textarea-sm md:textarea-md" rows="3" required></textarea>
             </div>
             <div class="form-control">
               <label class="label"><span class="label-text font-semibold text-sm md:text-base">Cupos</span></label>
-              <input v-model="newCourse.cupos" type="number" class="input input-bordered w-full input-sm md:input-md" required />
+              <input v-model="newCourse.cupos" type="number" min="1" step="1" class="input input-bordered input-enhanced w-full input-sm md:input-md" required />
             </div>
             <div class="form-control md:col-span-2">
               <label class="label"><span class="label-text font-semibold text-sm md:text-base">URL de Imagen</span></label>
-              <input v-model="newCourse.img" type="url" class="input input-bordered w-full input-sm md:input-md" required />
+              <input v-model="newCourse.img" type="url" class="input input-bordered input-enhanced w-full input-sm md:input-md" required />
             </div>
           </div>
-          <div class="modal-action mt-4 md:mt-6 pt-4 border-t border-base-300 flex-col sm:flex-row gap-2">
+          <div class="modal-action mt-4 md:mt-6 pt-4 border-t border-base-300 flex flex-col sm:flex-row gap-4 justify-end">
             <button type="button" 
                     @click="showAddModal = false" 
-                    class="btn btn-ghost w-full sm:w-auto sm:flex-1"
+                    class="btn btn-ghost w-full sm:w-auto order-2 sm:order-1"
                     aria-label="Cancelar y cerrar modal">
               Cancelar
             </button>
             <button type="submit" 
-                    class="btn btn-primary w-full sm:w-auto sm:flex-1"
+                    class="btn btn-primary w-full sm:w-auto order-1 sm:order-2"
                     aria-label="Agregar curso">
               Agregar
             </button>

@@ -109,37 +109,37 @@ async function confirmUpdateCourse() {
               aria-labelledby="edit-course-title">
           <div class="form-control w-full">
             <label class="label"><span class="label-text font-semibold text-sm md:text-base">Código</span></label>
-            <input v-model="course.codigo" type="text" class="input input-bordered w-full input-sm md:input-md" />
+            <input v-model="course.codigo" type="text" class="input input-bordered input-enhanced w-full input-sm md:input-md" />
           </div>
 
           <div class="form-control w-full">
             <label class="label"><span class="label-text font-semibold text-sm md:text-base">Nombre</span></label>
-            <input v-model="course.nombre" type="text" class="input input-bordered w-full input-sm md:input-md" />
+            <input v-model="course.nombre" type="text" class="input input-bordered input-enhanced w-full input-sm md:input-md" />
           </div>
 
           <div class="form-control w-full">
             <label class="label"><span class="label-text font-semibold text-sm md:text-base">Precio</span></label>
-            <input v-model="course.precio" type="number" class="input input-bordered w-full input-sm md:input-md" />
+            <input v-model="course.precio" type="number" min="0" step="any" class="input input-bordered input-enhanced w-full input-sm md:input-md" />
           </div>
 
           <div class="form-control w-full">
             <label class="label"><span class="label-text font-semibold text-sm md:text-base">Duración</span></label>
-            <input v-model="course.duracion" type="text" class="input input-bordered w-full input-sm md:input-md" />
+            <input v-model="course.duracion" type="text" class="input input-bordered input-enhanced w-full input-sm md:input-md" />
           </div>
 
           <div class="form-control w-full">
             <label class="label"><span class="label-text font-semibold text-sm md:text-base">Descripción</span></label>
-            <textarea v-model="course.descripcion" class="textarea textarea-bordered w-full textarea-sm md:textarea-md" rows="4"></textarea>
+            <textarea v-model="course.descripcion" class="textarea textarea-bordered textarea-enhanced w-full textarea-sm md:textarea-md" rows="4"></textarea>
           </div>
 
           <div class="form-control w-full">
             <label class="label"><span class="label-text font-semibold text-sm md:text-base">Cupos</span></label>
-            <input v-model="course.cupos" type="number" class="input input-bordered w-full input-sm md:input-md" />
+            <input v-model="course.cupos" type="number" min="1" step="1" class="input input-bordered input-enhanced w-full input-sm md:input-md" />
           </div>
 
           <div class="form-control w-full">
             <label class="label"><span class="label-text font-semibold text-sm md:text-base">URL de Imagen</span></label>
-            <input v-model="course.img" type="url" class="input input-bordered w-full input-sm md:input-md" placeholder="Ingresa la URL" />
+            <input v-model="course.img" type="url" class="input input-bordered input-enhanced w-full input-sm md:input-md" placeholder="Ingresa la URL" />
           </div>
 
           <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6 md:mt-8 pt-6 border-t border-gray-300">
