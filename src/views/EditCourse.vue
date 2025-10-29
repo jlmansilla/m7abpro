@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCoursesStore } from '@/stores/courses'
 import NavBar from '@/components/NavBar.vue'
@@ -14,12 +14,33 @@ const showUpdateConfirmModal = ref(false)
 const showSuccessToast = ref(false)
 const showErrorToast = ref(false)
 
-onMounted(() => {
+let unsubscribe = null
+
+function loadCourse() {
   const foundCourse = coursesStore.courses.find(c => c.id === courseId)
   if (foundCourse) {
     course.value = { ...foundCourse }
-  } else {
+  } else if (coursesStore.courses.length > 0) {
+    // Si hay cursos cargados pero no se encontró el que buscamos, redirigir
     router.push('/admin')
+  }
+}
+
+onMounted(() => {
+  unsubscribe = coursesStore.subscribeToCourses()
+  loadCourse()
+})
+
+// Observar cambios en los cursos para cargar el curso cuando esté disponible
+watch(() => coursesStore.courses, () => {
+  if (coursesStore.courses.length > 0 && !course.value) {
+    loadCourse()
+  }
+}, { immediate: true })
+
+onUnmounted(() => {
+  if (unsubscribe) {
+    unsubscribe()
   }
 })
 
