@@ -15,6 +15,10 @@ function closeWelcomeModal() {
   authStore.showWelcomeModal = false
 }
 
+function handleImageError(event) {
+  event.target.src = 'https://via.placeholder.com/300x200?text=Sin+Imagen'
+}
+
 async function enroll(course) {
   if (course.cupos - course.inscritos > 0) {
     await coursesStore.updateCourse(course.id, { inscritos: course.inscritos + 1 })
@@ -76,6 +80,7 @@ onUnmounted(() => {
                 :alt="`Imagen del curso ${course.nombre}`"
                 class="w-full h-full object-cover"
                 loading="lazy"
+                @error="handleImageError"
               />
             </figure>
             <div class="card-body text-center p-4">

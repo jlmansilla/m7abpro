@@ -28,6 +28,10 @@ const newCourse = ref({
 
 let unsubscribe = null
 
+function handleImageError(event) {
+  event.target.src = 'https://via.placeholder.com/300x200?text=Sin+Imagen'
+}
+
 onMounted(() => {
   unsubscribe = coursesStore.subscribeToCourses()
 })
@@ -158,6 +162,7 @@ async function toggleCourseStatus(course) {
                       :alt="`Imagen del curso ${course.nombre}`" 
                       loading="lazy"
                       class="w-full h-full object-cover object-center"
+                      @error="handleImageError"
                     />
                   </div>
                 </div>
@@ -211,6 +216,7 @@ async function toggleCourseStatus(course) {
                     :alt="`Imagen de ${course.nombre}`" 
                     loading="lazy"
                     class="object-cover object-center"
+                    @error="handleImageError"
                   />
                 </div>
               </div>
